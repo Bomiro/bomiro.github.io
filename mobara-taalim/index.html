@@ -1,0 +1,733 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="color-scheme" content="light dark" />
+<link rel="icon" href="data:," />
+<title>مباراة التعليم — المراجعة و QCM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#f4f5f2;
+    --surface:#ffffff;
+    --surface-2:#eceee8;
+    --ink:#17211c;
+    --ink-soft:#48544d;
+    --line:#d8dcd2;
+    --teal:#0d6b57;
+    --teal-deep:#084c3d;
+    --teal-soft:#e0efe9;
+    --amber:#b97d10;
+    --amber-soft:#f7ecd2;
+    --red:#b3372c;
+    --red-soft:#fbe9e6;
+    --green-ok:#177245;
+    --green-soft:#e2f2e7;
+    --shadow:0 1px 2px rgba(20,35,28,.06),0 8px 24px -12px rgba(20,35,28,.18);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#101613;
+      --surface:#1a211d;
+      --surface-2:#232b26;
+      --ink:#eef2ee;
+      --ink-soft:#aebbb2;
+      --line:#333d36;
+      --teal:#3cb598;
+      --teal-deep:#8fd8c4;
+      --teal-soft:#17362e;
+      --amber:#e0a83c;
+      --amber-soft:#3a2f14;
+      --red:#e07a6d;
+      --red-soft:#3d201c;
+      --green-ok:#5cc98a;
+      --green-soft:#173325;
+      --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px -12px rgba(0,0,0,.5);
+    }
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;background:var(--bg);color:var(--ink);
+    font-family:"IBM Plex Sans Arabic",system-ui,sans-serif;
+    font-size:16px;line-height:1.75;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{font-family:"Cairo","IBM Plex Sans Arabic",sans-serif;line-height:1.4;margin:0}
+  a{color:var(--teal)}
+  button{font-family:inherit;cursor:pointer}
+  button,[role="button"],select,summary,input:not([type="checkbox"],[type="radio"]){min-height:2.25rem}
+  .wrap{max-width:1020px;margin:0 auto;padding:0 16px 64px}
+
+  /* ---------- Hero ---------- */
+  .hero{padding:30px 0 8px}
+  .hero h1{font-size:clamp(1.7rem,5.2vw,2.6rem);font-weight:900;letter-spacing:-.01em}
+  .hero h1 .accent{color:var(--teal)}
+  .hero p.lead{color:var(--ink-soft);font-size:1.06rem;max-width:640px;margin:10px 0 0}
+  .meta-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+  .meta-chip{
+    background:var(--surface);border:1px solid var(--line);border-radius:10px;
+    padding:7px 13px;font-size:.92rem;font-weight:600;display:inline-flex;gap:7px;align-items:baseline;
+  }
+  .meta-chip b{color:var(--teal);font-family:"Cairo",sans-serif}
+  .meta-chip.warn b{color:var(--red)}
+
+  .countdown{
+    margin-top:20px;background:var(--teal-deep);color:#eafaf3;border-radius:16px;
+    padding:20px 22px;display:flex;flex-wrap:wrap;align-items:center;gap:14px 26px;
+  }
+  @media (prefers-color-scheme: dark){.countdown{background:#0d2b23}}
+  .countdown .num{font-family:"Cairo",sans-serif;font-size:2.6rem;font-weight:900;line-height:1;color:#fff}
+  .countdown .lbl{font-size:.95rem;opacity:.9}
+  .countdown .side{margin-inline-start:auto;font-size:.95rem;max-width:340px;opacity:.95}
+
+  /* ---------- Nav ---------- */
+  .jumpnav{
+    position:sticky;top:0;z-index:20;background:var(--bg);
+    display:flex;gap:8px;overflow-x:auto;padding:14px 0 10px;scrollbar-width:none;
+  }
+  .jumpnav::-webkit-scrollbar{display:none}
+  .jumpnav a{
+    flex:0 0 auto;text-decoration:none;color:var(--ink);background:var(--surface);
+    border:1px solid var(--line);border-radius:999px;padding:8px 16px;font-weight:700;font-size:.95rem;
+    display:inline-flex;align-items:center;min-height:2.5rem;
+  }
+  .jumpnav a:hover{border-color:var(--teal);color:var(--teal)}
+
+  /* ---------- Sections ---------- */
+  section{margin-top:38px;scroll-margin-top:76px}
+  .sec-head{display:flex;align-items:baseline;gap:12px;margin-bottom:6px}
+  .sec-head h2{font-size:1.45rem;font-weight:800}
+  .sec-head .tag{font-size:.82rem;font-weight:700;color:var(--amber);background:var(--amber-soft);border-radius:6px;padding:2px 9px;white-space:nowrap}
+  .sec-sub{color:var(--ink-soft);margin:0 0 16px;font-size:.98rem}
+
+  /* ---------- Weights ---------- */
+  .weights{display:grid;gap:12px}
+  @media(min-width:760px){.weights{grid-template-columns:repeat(3,1fr)}}
+  .wcard{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:var(--shadow)}
+  .wcard .pct{font-family:"Cairo",sans-serif;font-size:2rem;font-weight:900;color:var(--teal);line-height:1.1}
+  .wcard h3{font-size:1.05rem;margin:4px 0 2px}
+  .wcard p{margin:0;color:var(--ink-soft);font-size:.9rem}
+  .bar{height:8px;border-radius:99px;background:var(--surface-2);margin-top:12px;overflow:hidden}
+  .bar i{display:block;height:100%;background:var(--teal);border-radius:99px}
+  .wcard ul{margin:10px 0 0;padding-inline-start:18px;font-size:.9rem;color:var(--ink-soft)}
+  .wcard ul li{margin:2px 0}
+
+  /* ---------- Plan ---------- */
+  .plan{display:grid;gap:12px}
+  @media(min-width:760px){.plan{grid-template-columns:1fr 1fr}}
+  .phase{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:var(--shadow)}
+  .phase .days{
+    display:inline-block;font-family:"Cairo",sans-serif;font-weight:800;font-size:.85rem;
+    background:var(--teal-soft);color:var(--teal);border-radius:7px;padding:3px 10px;margin-bottom:8px;
+  }
+  .phase h3{font-size:1.08rem;margin-bottom:4px}
+  .phase p{margin:0 0 8px;color:var(--ink-soft);font-size:.94rem}
+  .phase ul{margin:0;padding-inline-start:18px;font-size:.94rem}
+  .phase ul li{margin:3px 0}
+  .phase.final{border-color:var(--amber)}
+  .phase.final .days{background:var(--amber-soft);color:var(--amber)}
+  .rule-strip{
+    margin-top:14px;background:var(--amber-soft);border:1px dashed var(--amber);border-radius:12px;
+    padding:13px 16px;font-size:.95rem;
+  }
+  .rule-strip b{color:var(--amber)}
+
+  /* ---------- Revision accordions ---------- */
+  details.rev{
+    background:var(--surface);border:1px solid var(--line);border-radius:14px;margin-bottom:12px;
+    box-shadow:var(--shadow);overflow:hidden;
+  }
+  details.rev summary{
+    list-style:none;cursor:pointer;padding:16px 18px;display:flex;align-items:center;gap:12px;
+    font-family:"Cairo",sans-serif;font-weight:800;font-size:1.05rem;min-height:3rem;
+  }
+  details.rev summary::-webkit-details-marker{display:none}
+  details.rev summary .w{
+    margin-inline-start:auto;font-size:.8rem;font-weight:700;color:var(--teal);
+    background:var(--teal-soft);border-radius:6px;padding:2px 9px;white-space:nowrap;font-family:"IBM Plex Sans Arabic",sans-serif;
+  }
+  details.rev summary .chev{color:var(--ink-soft);transition:transform .2s;font-size:.8rem}
+  details.rev[open ] summary .chev{transform:rotate(180deg)}
+  .rev-body{padding:2px 18px 18px;border-top:1px solid var(--line)}
+  .rev-body h4{font-family:"Cairo",sans-serif;font-size:.98rem;margin:14px 0 4px;color:var(--teal)}
+  .rev-body p{margin:4px 0;font-size:.95rem}
+  .rev-body ul{margin:4px 0;padding-inline-start:19px;font-size:.95rem}
+  .rev-body li{margin:3px 0}
+  .tbl-wrap{overflow-x:auto;margin:10px 0}
+  table{border-collapse:collapse;width:100%;font-size:.92rem;min-width:430px}
+  th,td{border:1px solid var(--line);padding:8px 10px;text-align:right;vertical-align:top}
+  th{background:var(--surface-2);font-family:"Cairo",sans-serif;font-weight:700}
+  .keybox{background:var(--teal-soft);border-radius:10px;padding:11px 14px;font-size:.93rem;margin:10px 0}
+  .keybox b{color:var(--teal)}
+
+  /* ---------- QCM ---------- */
+  .qcm-box{background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:20px}
+  .filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+  .filters button{
+    border:1px solid var(--line);background:var(--surface-2);color:var(--ink);border-radius:999px;
+    padding:8px 16px;font-weight:700;font-size:.92rem;min-height:2.6rem;
+  }
+  .filters button.active{background:var(--teal);border-color:var(--teal);color:#fff}
+  .q-progress{display:flex;align-items:center;gap:12px;font-size:.9rem;color:var(--ink-soft);margin-bottom:6px}
+  .q-progress .track{flex:1;height:8px;background:var(--surface-2);border-radius:99px;overflow:hidden}
+  .q-progress .track i{display:block;height:100%;background:var(--teal);width:0;transition:width .3s}
+  .q-score{font-weight:700;color:var(--ink)}
+  .q-domain{font-size:.82rem;font-weight:700;color:var(--amber);background:var(--amber-soft);border-radius:6px;padding:2px 9px;display:inline-block;margin-bottom:8px}
+  .q-text{font-family:"Cairo",sans-serif;font-size:1.12rem;font-weight:700;margin:0 0 14px}
+  .opts{display:grid;gap:9px}
+  .opt{
+    text-align:right;width:100%;background:var(--surface);border:1.5px solid var(--line);border-radius:12px;
+    padding:12px 15px;font-size:1rem;color:var(--ink);display:flex;gap:10px;align-items:flex-start;min-height:3rem;
+  }
+  .opt .letter{
+    flex:0 0 auto;width:26px;height:26px;border-radius:8px;background:var(--surface-2);
+    display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:.85rem;font-family:"Cairo",sans-serif;
+  }
+  .opt:hover:not(:disabled){border-color:var(--teal)}
+  .opt:disabled{cursor:default;opacity:1}
+  .opt.correct{border-color:var(--green-ok);background:var(--green-soft)}
+  .opt.correct .letter{background:var(--green-ok);color:#fff}
+  .opt.wrong{border-color:var(--red);background:var(--red-soft)}
+  .opt.wrong .letter{background:var(--red);color:#fff}
+  .explain{
+    display:none;margin-top:14px;border-radius:12px;padding:13px 15px;font-size:.95rem;
+    background:var(--surface-2);
+  }
+  .explain.show{display:block}
+  .explain .verdict{font-family:"Cairo",sans-serif;font-weight:800;margin-bottom:2px}
+  .explain .verdict.ok{color:var(--green-ok)}
+  .explain .verdict.ko{color:var(--red)}
+  .q-actions{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+  .btn{
+    border-radius:11px;padding:10px 22px;font-weight:800;font-size:.98rem;border:1px solid var(--line);
+    background:var(--surface-2);color:var(--ink);min-height:2.8rem;font-family:"Cairo",sans-serif;
+  }
+  .btn.primary{background:var(--teal);border-color:var(--teal);color:#fff}
+  .btn:disabled{opacity:.45;cursor:default}
+  .q-done{text-align:center;padding:14px 0 4px}
+  .q-done .big{font-family:"Cairo",sans-serif;font-size:2.2rem;font-weight:900;color:var(--teal)}
+  .q-done p{color:var(--ink-soft);margin:4px 0 14px}
+
+  /* ---------- Resources ---------- */
+  .res-grid{display:grid;gap:12px}
+  @media(min-width:760px){.res-grid{grid-template-columns:1fr 1fr}}
+  .res{
+    background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 18px;
+    text-decoration:none;color:var(--ink);display:block;box-shadow:var(--shadow);
+  }
+  .res:hover{border-color:var(--teal)}
+  .res .kind{font-size:.78rem;font-weight:800;letter-spacing:.02em;color:var(--teal);background:var(--teal-soft);border-radius:6px;padding:2px 9px;display:inline-block;margin-bottom:7px}
+  .res .kind.pdf{color:var(--red);background:var(--red-soft)}
+  .res h3{font-size:1.02rem;margin-bottom:3px}
+  .res p{margin:0;color:var(--ink-soft);font-size:.9rem}
+  .res .go{margin-top:9px;font-weight:700;color:var(--teal);font-size:.92rem}
+
+  footer{margin-top:44px;border-top:1px solid var(--line);padding-top:16px;color:var(--ink-soft);font-size:.88rem}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto}
+    *{transition:none!important}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ================= HERO ================= -->
+  <header class="hero">
+    <h1>مباراة التعليم 2026<br />المراجعة و<span class="accent"> QCM </span>فبلاصة وحدة</h1>
+    <p class="lead">كلشي مجموع ومنظم هنا: ملخصات علوم التربية مرتبة حسب وزن كل مجال فالامتحان، خطة مراجعة حتى نهار الامتحان، تدريب QCM بتصحيح فوري وشرح، ونماذج الامتحانات السابقة مع ملفات PDF.</p>
+    <div class="meta-row">
+      <span class="meta-chip">الامتحان الكتابي <b>السبت 28 نونبر 2026</b></span>
+      <span class="meta-chip">النوع <b>QCM</b></span>
+      <span class="meta-chip">المعامل <b>8</b></span>
+      <span class="meta-chip">المدة <b>ساعتان</b></span>
+      <span class="meta-chip warn">أقل من <b>5/20 إقصائية</b></span>
+    </div>
+    <div class="countdown">
+      <div>
+        <div class="num" id="cdNum">—</div>
+        <div class="lbl" id="cdLbl">يوم بقا على الامتحان</div>
+      </div>
+      <p class="side">ما تقراش بالترتيب، قرا <b>بالوزن</b>: علم النفس التربوي بوحدو 40% من الامتحان. كل درس كملو بـ QCM، والغلط ديال اليوم عاودو غدا.</p>
+    </div>
+  </header>
+
+  <nav class="jumpnav" aria-label="أقسام الصفحة">
+    <a href="#weights">أوزان المجالات</a>
+    <a href="#plan">خطة المراجعة</a>
+    <a href="#revision">الملخصات</a>
+    <a href="#qcm">تدريب QCM</a>
+    <a href="#resources">النماذج و PDF</a>
+  </nav>
+
+  <!-- ================= WEIGHTS ================= -->
+  <section id="weights">
+    <div class="sec-head"><h2>شنو غادي يطيح فالامتحان؟</h2><span class="tag">حسب الإطار المرجعي الرسمي</span></div>
+    <p class="sec-sub">اختبار علوم التربية كيتقسم على 3 مجالات رئيسية. هادا هو التوزيع اللي خاص تبني عليه المراجعة ديالك:</p>
+    <div class="weights">
+      <article class="wcard">
+        <div class="pct">40%</div>
+        <h3>علم النفس التربوي</h3>
+        <p>المجال الرئيسي الأول — الأثقل فالامتحان</p>
+        <div class="bar"><i style="width:100%"></i></div>
+        <ul>
+          <li><b>علم نفس النمو (20%):</b> بياجي، فرويد، إريكسون، مونتسوري، كولبرغ…</li>
+          <li><b>علم نفس التعلم (20%):</b> السلوكية، البنائية، السوسيوبنائية، المعرفية، صعوبات التعلم…</li>
+        </ul>
+      </article>
+      <article class="wcard">
+        <div class="pct">30%</div>
+        <h3>المقاربات البيداغوجية وطرائق التدريس</h3>
+        <p>المجال الرئيسي الثاني</p>
+        <div class="bar"><i style="width:75%"></i></div>
+        <ul>
+          <li><b>من الأهداف إلى الكفايات (15%):</b> الأسس النظرية والمفاهيم والتصريف الإجرائي</li>
+          <li><b>طرائق التدريس (15%):</b> المنهج التوليدي السقراطي، التعلم الذاتي، حل المشكلات، بيداغوجيا اللعب والمشروع</li>
+        </ul>
+      </article>
+      <article class="wcard">
+        <div class="pct">30%</div>
+        <h3>سوسيولوجيا التربية</h3>
+        <p>المجال الرئيسي الثالث</p>
+        <div class="bar"><i style="width:75%"></i></div>
+        <ul>
+          <li><b>سوسيولوجيا التربية (15%):</b> وظائف المدرسة، التنشئة الاجتماعية، تكافؤ الفرص، التربية الدامجة</li>
+          <li><b>دينامية الجماعة (15%):</b> جماعة القسم، القيادة، القياس السوسيومتري، تدبير القسم، الحياة المدرسية</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <!-- ================= PLAN ================= -->
+  <section id="plan">
+    <div class="sec-head"><h2>خطة المراجعة حتى 28 نونبر</h2><span class="tag">17 يوم</span></div>
+    <p class="sec-sub">الخطة مبنية على الأوزان: تقريبا نص الوقت لعلم النفس، والباقي مقسم بين البيداغوجيا والسوسيولوجيا، وآخر يومين غير للنماذج والأخطاء.</p>
+    <div class="plan">
+      <article class="phase">
+        <span class="days">اليوم 1 – 6 · علم النفس التربوي 40%</span>
+        <h3>النمو أولا، من بعد التعلم</h3>
+        <p>هادي هي أكبر كتلة فالامتحان، بدا بيها ونتا باقي مركز.</p>
+        <ul>
+          <li><b>النمو:</b> مراحل بياجي الأربعة بالأعمار، فرويد، إريكسون (8 مراحل)، كولبرغ، مونتسوري، عوامل النمو واضطراباته</li>
+          <li><b>التعلم:</b> بافلوف وسكينر، بياجي (استيعاب/مواءمة)، فيغوتسكي (المنطقة القريبة من النمو)، الجشطالت، الدافعية، الفروق الفردية وصعوبات التعلم</li>
+          <li>كل نظرية: صاحبها + الفكرة الأساسية + مثال من القسم</li>
+        </ul>
+      </article>
+      <article class="phase">
+        <span class="days">اليوم 7 – 11 · المقاربات البيداغوجية 30%</span>
+        <h3>من الأهداف إلى الكفايات</h3>
+        <p>الامتحان هنا كيسول بزاف على الفروق والمقارنات بين المقاربات.</p>
+        <ul>
+          <li>بيداغوجيا الأهداف (بلوم) مقابل المقاربة بالكفايات: الفرق فالتعريف والتصريف</li>
+          <li>بيداغوجيا المشروع، اللعب، حل المشكلات، التعلم الذاتي، البيداغوجيا الفارقية</li>
+          <li>التخطيط (الجذاذة)، التقويم (تشخيصي/تكويني/إجمالي)، الدعم البيداغوجي</li>
+        </ul>
+      </article>
+      <article class="phase">
+        <span class="days">اليوم 12 – 15 · سوسيولوجيا التربية 30%</span>
+        <h3>المدرسة والمجتمع وجماعة القسم</h3>
+        <p>مفاهيم قصيرة وسهلة التجميع إلا فهمتيها، ماشي حفظتيها.</p>
+        <ul>
+          <li>وظائف المدرسة، التنشئة الاجتماعية، تكافؤ الفرص، الهدر المدرسي، التربية الدامجة</li>
+          <li>دينامية الجماعة: القيادة، القياس السوسيومتري (مورينو)، تدبير العلاقات وحل النزاعات</li>
+          <li>التواصل التربوي والتنشيط داخل القسم، الحياة المدرسية ومجالس المؤسسة</li>
+        </ul>
+      </article>
+      <article class="phase final">
+        <span class="days">اليوم 16 – 17 · النماذج والأخطاء فقط</span>
+        <h3>امتحانات كاملة بالتوقيت الحقيقي</h3>
+        <p>بلا دروس جداد. غير محاكاة وظروف الامتحان.</p>
+        <ul>
+          <li>دير نموذج 2022 ونموذج 2021 كاملين فساعتين، بلا توقف</li>
+          <li>صحح وعاود قرا غير المواضيع اللي غلطتي فيها</li>
+          <li>ليلة الامتحان: مراجعة خفيفة للجداول المقارنة ونوم بكري</li>
+        </ul>
+      </article>
+    </div>
+    <div class="rule-strip"><b>القاعدة الذهبية:</b> الامتحان ما كيسولش غير «شنو التعريف؟» — كيسول «شنو الفرق بين…؟» و«فأي وضعية نستعمل…؟». فهم النظرية + عرف تطبقها على وضعية من القسم، وكل ملخص ساليه بـ 20 سؤال QCM قبل ما دوز للدرس اللي بعدو.</div>
+  </section>
+
+  <!-- ================= REVISION ================= -->
+  <section id="revision">
+    <div class="sec-head"><h2>الملخصات المركزة</h2><span class="tag">افتح كل مجال وراجع</span></div>
+    <p class="sec-sub">ملخصات قصيرة بالنقط اللي كتطيح فـ QCM: التعاريف الدقيقة، الأعمار، أسماء العلماء، والفروق بين النظريات.</p>
+
+    <details class="rev" open>
+      <summary>علم نفس النمو <span class="w">20%</span><span class="chev">▾</span></summary>
+      <div class="rev-body">
+        <h4>بياجي — مراحل النمو المعرفي</h4>
+        <div class="tbl-wrap"><table>
+          <tr><th>المرحلة</th><th>السن</th><th>أهم خاصية</th></tr>
+          <tr><td>الحسية الحركية</td><td>0 – 2 سنوات</td><td>المعرفة عبر الحواس والحركة؛ يكتسب دوام الموضوع</td></tr>
+          <tr><td>ما قبل الإجرائية</td><td>2 – 7 سنوات</td><td>ظهور اللغة والتفكير الرمزي؛ التمركز حول الذات؛ غياب الاحتفاظ</td></tr>
+          <tr><td>الإجرائية المحسوسة</td><td>7 – 11 سنة</td><td>عمليات منطقية على المحسوس: تصنيف، ترتيب، احتفاظ بالكمية</td></tr>
+          <tr><td>الإجرائية المجردة</td><td>12 سنة فأكثر</td><td>تفكير مجرد وفرضي استنباطي</td></tr>
+        </table></div>
+        <h4>فرويد — المراحل النفسية الجنسية</h4>
+        <ul>
+          <li><b>الفمية</b> (0–1): اللذة من الفم (الرضاعة، المص)</li>
+          <li><b>الشرجية</b> (1–3): التحكم في الإخراج، بداية الاستقلال</li>
+          <li><b>القضيبية</b> (3–6): عقدة أوديب وإلكترا</li>
+          <li><b>الكمون</b> (6–12): هدوء الدوافع، التوجه نحو التعلم والأقران</li>
+          <li><b>الجنسية/التناسلية</b> (البلوغ فأكثر): نضج العلاقات</li>
+        </ul>
+        <h4>إريكسون — 8 مراحل نفسية اجتماعية</h4>
+        <p>كل مرحلة أزمة بين قطبين، وأهمها للامتحان: <b>الثقة / عدم الثقة</b> (0–1)، <b>الاستقلال / الخجل والشك</b> (1–3)، <b>المبادرة / الذنب</b> (3–6)، <b>الاجتهاد / الدونية</b> (6–12، مرحلة التمدرس)، <b>الهوية / اضطراب الهوية</b> (المراهقة).</p>
+        <h4>أسماء أخرى كتطيح بزاف</h4>
+        <ul>
+          <li><b>كولبرغ:</b> مراحل النمو الأخلاقي (ما قبل تقليدي، تقليدي، ما بعد تقليدي)</li>
+          <li><b>مونتسوري:</b> التعلم الذاتي باللعب والوسائل الحسية، احترام إيقاع الطفل</li>
+          <li><b>عوامل النمو:</b> الوراثة، النضج، البيئة، التغذية والصحة، التعلم والخبرة</li>
+        </ul>
+        <div class="keybox"><b>فخ QCM:</b> «الاحتفاظ بالكمية» و«التصنيف» كيظهرو فالمرحلة الإجرائية المحسوسة (7–11)، ماشي قبل. و«التفكير الفرضي» خاص بالمرحلة المجردة.</div>
+      </div>
+    </details>
+
+    <details class="rev">
+      <summary>علم نفس التعلم <span class="w">20%</span><span class="chev">▾</span></summary>
+      <div class="rev-body">
+        <h4>النظريات الكبرى — جدول المقارنة اللي كيجيب النقط</h4>
+        <div class="tbl-wrap"><table>
+          <tr><th>النظرية</th><th>أعلامها</th><th>كيفاش كيوقع التعلم؟</th></tr>
+          <tr><td>السلوكية — اشتراط كلاسيكي</td><td>بافلوف، واطسون</td><td>الارتباط بين مثير واستجابة (تجربة الكلب والجرس)</td></tr>
+          <tr><td>السلوكية — اشتراط إجرائي</td><td>سكينر، ثورندايك</td><td>التعزيز والعقاب وقانون الأثر: السلوك المعزز يتكرر</td></tr>
+          <tr><td>البنائية</td><td>بياجي</td><td>بناء المعرفة عبر الاستيعاب والمواءمة والتوازن المعرفي</td></tr>
+          <tr><td>السوسيوبنائية</td><td>فيغوتسكي</td><td>التعلم اجتماعي أولا؛ المنطقة القريبة من النمو والسقالات</td></tr>
+          <tr><td>الجشطالتية</td><td>كوهلر، كوفكا</td><td>التعلم بالاستبصار: فهم الكل دفعة واحدة، ماشي تجزئة</td></tr>
+          <tr><td>المعرفية</td><td>أوزوبل وآخرون</td><td>معالجة المعلومات؛ التعلم ذو المعنى بربط الجديد بالسابق</td></tr>
+        </table></div>
+        <h4>مفاهيم مفتاحية</h4>
+        <ul>
+          <li><b>المنطقة القريبة من النمو (فيغوتسكي):</b> الفرق بين ما ينجزه المتعلم وحده وما ينجزه بمساعدة — وهنا كيتدخل الأستاذ بـ«السقالات»</li>
+          <li><b>الاستيعاب والمواءمة (بياجي):</b> الاستيعاب = إدماج الجديد في البنية الموجودة؛ المواءمة = تعديل البنية لاستقبال الجديد</li>
+          <li><b>الدافعية:</b> داخلية (رغبة واهتمام) وخارجية (نقط، مكافآت) — الداخلية أبقى أثرا</li>
+          <li><b>الفروق الفردية وصعوبات التعلم:</b> تفاوت القدرات والإيقاعات؛ صعوبات مثل عسر القراءة والكتابة والحساب تحتاج دعما فارقيا</li>
+        </ul>
+        <div class="keybox"><b>فخ QCM:</b> التعزيز والعقاب = سكينر (إجرائي). المثير والاستجابة مع الجرس = بافلوف (كلاسيكي). ما تخلطش بيناتهم.</div>
+      </div>
+    </details>
+
+    <details class="rev">
+      <summary>المقاربات البيداغوجية وطرائق التدريس <span class="w">30%</span><span class="chev">▾</span></summary>
+      <div class="rev-body">
+        <h4>من بيداغوجيا الأهداف إلى المقاربة بالكفايات</h4>
+        <ul>
+          <li><b>بيداغوجيا الأهداف:</b> تعلم مجزأ، أهداف إجرائية قابلة للملاحظة والقياس (تصنيف بلوم)، الأستاذ هو المركز نسبيا</li>
+          <li><b>الكفاية:</b> قدرة المتعلم على تعبئة مجموعة موارد (معارف، مهارات، مواقف) لمواجهة وضعية مركبة — التعلم مندمج ومتمحور حول المتعلم</li>
+          <li><b>الوضعية المشكلة / وضعية الانطلاق:</b> نقطة بداية الدرس في المقاربة بالكفايات، و<b>وضعية التقويم</b> تكون وضعية إدماجية</li>
+          <li><b>أنواع الكفايات:</b> أساسية، تواصلية، منهجية، ثقافية، تكنولوجية</li>
+        </ul>
+        <h4>البيداغوجيات والطرائق</h4>
+        <ul>
+          <li><b>بيداغوجيا المشروع:</b> تعلم حول إنجاز منتوج/مشروع، المتعلم فاعل ومخطط</li>
+          <li><b>بيداغوجيا اللعب:</b> التعلم عبر اللعب، مهمة خصوصا فالتعليم الأولي والابتدائي</li>
+          <li><b>حل المشكلات:</b> وضع المتعلم أمام مشكلة تستدعي البحث والاستنتاج</li>
+          <li><b>المنهج التوليدي السقراطي:</b> توليد المعرفة عند المتعلم عبر الأسئلة المتدرجة</li>
+          <li><b>البيداغوجيا الفارقية:</b> تنويع الطرائق والإيقاعات حسب الفروق الفردية</li>
+          <li><b>التعلم الذاتي:</b> المتعلم يبني تعلمه باستقلال وبتوجيه من الأستاذ</li>
+        </ul>
+        <h4>التخطيط والتقويم والدعم</h4>
+        <ul>
+          <li><b>الجذاذة البيداغوجية:</b> وثيقة تخطيط الدرس (كفايات، أهداف، مراحل، وسائل، تقويم)</li>
+          <li><b>التقويم التشخيصي:</b> قبل التعلم — كشف المكتسبات القبلية والصعوبات</li>
+          <li><b>التقويم التكويني:</b> أثناء التعلم — تغذية راجعة وتعديل فوري</li>
+          <li><b>التقويم الإجمالي/الإشهادي:</b> نهاية التعلم — قياس التحصيل ومنح النقط</li>
+          <li><b>الدعم البيداغوجي:</b> معالجة التعثرات بعد تشخيصها، داخل القسم أو في حصص خاصة</li>
+        </ul>
+        <div class="keybox"><b>فخ QCM:</b> التقويم في بداية الدرس أو الوحدة = تشخيصي. وسط الدرس = تكويني. فالنهاية = إجمالي. هاد الثلاثة كيجيو تقريبا كل عام.</div>
+      </div>
+    </details>
+
+    <details class="rev">
+      <summary>سوسيولوجيا التربية ودينامية الجماعة <span class="w">30%</span><span class="chev">▾</span></summary>
+      <div class="rev-body">
+        <h4>سوسيولوجيا التربية</h4>
+        <ul>
+          <li><b>التنشئة الاجتماعية:</b> العملية اللي كيكتسب بها الفرد قيم المجتمع ومعاييره ولغته، عبر الأسرة والمدرسة والأقران والإعلام</li>
+          <li><b>وظائف المدرسة:</b> نقل المعارف والقيم، التنشئة، الانتقاء والتوجيه، الإدماج الاجتماعي والمهني</li>
+          <li><b>دوركايم:</b> التربية هي التأثير المنهجي للجيل الراشد على الجيل الناشئ؛ المدرسة كتنقل القيم المشتركة</li>
+          <li><b>بورديو:</b> رأس المال الثقافي وإعادة الإنتاج الاجتماعي — المدرسة قد تعيد إنتاج الفوارق إن لم تنتبه لها</li>
+          <li><b>تكافؤ الفرص:</b> مساواة الجميع في الولوج والنجاح مهما كان الأصل الاجتماعي</li>
+          <li><b>الهدر المدرسي:</b> الرسوب والانقطاع المبكر عن الدراسة، أسبابه اجتماعية واقتصادية وبيداغوجية</li>
+          <li><b>التربية الدامجة:</b> إدماج الأطفال ذوي الاحتياجات الخاصة في الأقسام العادية مع دعم مناسب</li>
+        </ul>
+        <h4>دينامية الجماعة داخل القسم</h4>
+        <ul>
+          <li><b>دينامية الجماعة (كورت لوين):</b> دراسة التفاعلات والعلاقات داخل الجماعة وتأثيرها على السلوك</li>
+          <li><b>القياس السوسيومتري (مورينو):</b> تقنية لقياس العلاقات والتفضيلات داخل جماعة القسم (شكون كيختار شكون)</li>
+          <li><b>القيادة داخل القسم:</b> أنماطها سلطوية وديمقراطية ومتساهلة — الديمقراطية أنجع تربويا</li>
+          <li><b>تدبير القسم وحل النزاعات:</b> قواعد متفق عليها، تواصل فعال، وساطة بدل العقاب وحده</li>
+          <li><b>الحياة المدرسية:</b> الأنشطة الموازية والأندية ومجالس المؤسسة (مجلس التدبير، المجلس التربوي، مجالس الأقسام)</li>
+        </ul>
+        <div class="keybox"><b>فخ QCM:</b> القياس السوسيومتري = مورينو. دينامية الجماعة كمفهوم = لوين. التنشئة عند دوركايم مرتبطة بنقل قيم المجتمع.</div>
+      </div>
+    </details>
+  </section>
+
+  <!-- ================= QCM ================= -->
+  <section id="qcm">
+    <div class="sec-head"><h2>تدريب QCM</h2><span class="tag">32 سؤال · تصحيح فوري + شرح</span></div>
+    <p class="sec-sub">اختار مجال ولا دير «الكل» كمحاكاة مختلطة. جاوب، شوف التصحيح والشرح مباشرة، وكمل. النتيجة كتبان فاللخر.</p>
+    <div class="qcm-box">
+      <div class="filters" id="filters" role="group" aria-label="اختيار المجال">
+        <button data-f="all" class="active">الكل (32)</button>
+        <button data-f="dev">علم نفس النمو</button>
+        <button data-f="learn">علم نفس التعلم</button>
+        <button data-f="ped">المقاربات وطرائق التدريس</button>
+        <button data-f="soc">سوسيولوجيا التربية</button>
+      </div>
+      <div id="quizArea">
+        <div class="q-progress">
+          <span id="qCount">السؤال 1 من 30</span>
+          <div class="track"><i id="qBar"></i></div>
+          <span class="q-score" id="qScore">النتيجة: 0</span>
+        </div>
+        <span class="q-domain" id="qDomain"></span>
+        <p class="q-text" id="qText"></p>
+        <div class="opts" id="qOpts"></div>
+        <div class="explain" id="qExplain">
+          <div class="verdict" id="qVerdict"></div>
+          <div id="qWhy"></div>
+        </div>
+        <div class="q-actions">
+          <button class="btn primary" id="btnNext" disabled>السؤال التالي ←</button>
+          <button class="btn" id="btnRestart">إعادة البدء</button>
+        </div>
+      </div>
+      <div id="doneArea" class="q-done" hidden>
+        <div class="big" id="doneScore"></div>
+        <p id="doneMsg"></p>
+        <button class="btn primary" id="btnAgain">عاود التدريب</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= RESOURCES ================= -->
+  <section id="resources">
+    <div class="sec-head"><h2>النماذج السابقة وملفات PDF</h2><span class="tag">روابط خارجية</span></div>
+    <p class="sec-sub">نماذج امتحانات مباراة التعليم مع التصحيح، وملخصات PDF جاهزة للتحميل — باش تدرب على أسئلة حقيقية ديال سنوات فاتو.</p>
+    <div class="res-grid">
+      <a class="res" href="https://concoursmarocofficiel.com/exams-concours-enseignement-crmef/" target="_blank" rel="noopener">
+        <span class="kind">نماذج + تصحيح</span>
+        <h3>نماذج مباراة التعليم مع التصحيح</h3>
+        <p>ابتدائي وإعدادي وتأهيلي — نماذج مصححة للتدريب بالتوقيت الحقيقي.</p>
+        <div class="go">افتح الموقع ←</div>
+      </a>
+      <a class="res" href="https://www.dreamjob.ma/alwadifa/exemples-concours-taalim/" target="_blank" rel="noopener">
+        <span class="kind">نماذج</span>
+        <h3>نماذج مباراة التعليم — جميع التخصصات</h3>
+        <p>أرشيف نماذج لجميع الأسلاك والتخصصات.</p>
+        <div class="go">افتح الموقع ←</div>
+      </a>
+      <a class="res" href="https://mesconcours.ma/ar/concours/enseignement/2022/" target="_blank" rel="noopener">
+        <span class="kind">نموذج مصحح</span>
+        <h3>علوم التربية — نموذج نونبر 2022</h3>
+        <p>موضوع 2022 مصحح سؤال بسؤال: مثالي كمحاكاة فاليوم 16.</p>
+        <div class="go">افتح النموذج ←</div>
+      </a>
+      <a class="res" href="https://www.flsafa.com/2026/10/pdf-2016-2020.html" target="_blank" rel="noopener">
+        <span class="kind pdf">PDF</span>
+        <h3>امتحانات سابقة 2016 – 2020 (PDF)</h3>
+        <p>مجموعة امتحانات سنوات سابقة بصيغة PDF للتحميل والطباعة.</p>
+        <div class="go">افتح صفحة التحميل ←</div>
+      </a>
+      <a class="res" href="https://www.jobdetecter.com/pdf/science_edu/10.pdf" target="_blank" rel="noopener">
+        <span class="kind pdf">PDF مباشر</span>
+        <h3>المختصر المفيد في علوم التربية (PDF)</h3>
+        <p>ملخص شامل في علوم التربية — ملف PDF مباشر للتحميل.</p>
+        <div class="go">حمّل الـ PDF ←</div>
+      </a>
+      <a class="res" href="https://your-book.com/%d8%b3%d9%8a%d9%83%d9%88%d9%84%d9%88%d8%ac%d9%8a%d8%a7-%d8%a7%d9%84%d9%86%d9%85%d9%88/" target="_blank" rel="noopener">
+        <span class="kind">ملخص</span>
+        <h3>ملخص سيكولوجيا النمو</h3>
+        <p>بياجي وفرويد وإريكسون ملخصين — أهم 20% فالامتحان.</p>
+        <div class="go">افتح الملخص ←</div>
+      </a>
+      <a class="res" href="https://wadifa.analkhabar.com/%d9%82%d8%a8%d9%84-%d9%85%d8%a8%d8%a7%d8%b1%d8%a7%d8%a9-%d8%a7%d9%84%d8%aa%d8%b9%d9%84%d9%8a%d9%85-2026-%d9%87%d8%b0%d9%87-%d8%a3%d9%87%d9%85-%d8%a7%d9%84%d8%af%d8%b1%d9%88%d8%b3/" target="_blank" rel="noopener">
+        <span class="kind">دليل مراجعة</span>
+        <h3>أهم الدروس والمواضيع قبل مباراة 2026</h3>
+        <p>شنو تراجع بالضبط قبل المباراة: لائحة المواضيع ذات الأولوية.</p>
+        <div class="go">افتح الدليل ←</div>
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    تجميع للمراجعة من الإطار المرجعي لاختبار علوم التربية (الأوزان الرسمية: علم النفس التربوي 40%، المقاربات البيداغوجية 30%، سوسيولوجيا التربية 30%). أسئلة QCM تدريبية مصاغة على نمط المباراة وليست أسئلة رسمية. بالتوفيق نهار 28 نونبر.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------- Countdown ---------- */
+  var exam = new Date(2026, 10, 28); // 28 Nov 2026
+  var now = new Date();
+  var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  var days = Math.round((exam - today) / 86400000);
+  var cdNum = document.getElementById('cdNum');
+  var cdLbl = document.getElementById('cdLbl');
+  if (days > 1) { cdNum.textContent = days; cdLbl.textContent = 'يوم بقا على الامتحان الكتابي'; }
+  else if (days === 1) { cdNum.textContent = '1'; cdLbl.textContent = 'يوم واحد بقا — غدا الامتحان'; }
+  else if (days === 0) { cdNum.textContent = 'اليوم'; cdLbl.textContent = 'نهار الامتحان — بالتوفيق'; }
+  else { cdNum.textContent = '—'; cdLbl.textContent = 'دازت المباراة — راجع النتائج'; }
+
+  /* ---------- QCM data ---------- */
+  var DOMAIN_NAMES = {
+    dev: 'علم نفس النمو',
+    learn: 'علم نفس التعلم',
+    ped: 'المقاربات البيداغوجية وطرائق التدريس',
+    soc: 'سوسيولوجيا التربية ودينامية الجماعة'
+  };
+  var QUESTIONS = [
+    // --- علم نفس النمو ---
+    {d:'dev', q:'عند بياجي، مرحلة العمليات الإجرائية المحسوسة كتوافق السن:', o:['0 – 2 سنوات','2 – 7 سنوات','7 – 11 سنة','12 سنة فأكثر'], a:2, w:'7 – 11 سنة: المتعلم كيدير عمليات منطقية (تصنيف، ترتيب، احتفاظ) ولكن على الأشياء المحسوسة فقط.'},
+    {d:'dev', q:'مفهوم «الاحتفاظ بالكمية» (مثلا كمية الماء ما كتتبدلش بتغير الإناء) كيظهر عند الطفل في مرحلة:', o:['الحسية الحركية','ما قبل الإجرائية','الإجرائية المحسوسة','الإجرائية المجردة'], a:2, w:'الاحتفاظ من علامات المرحلة الإجرائية المحسوسة. طفل ما قبل الإجرائية كيحكم بالمظهر فقط.'},
+    {d:'dev', q:'عند إريكسون، أزمة مرحلة التمدرس (6 – 12 سنة) هي:', o:['الثقة / عدم الثقة','الهوية / اضطراب الهوية','الاجتهاد / الشعور بالدونية','المبادرة / الذنب'], a:2, w:'الاجتهاد مقابل الدونية: النجاح المدرسي كيبني الإحساس بالكفاءة، والفشل المتكرر كيولد الدونية.'},
+    {d:'dev', q:'مرحلة «الكمون» عند فرويد كتوافق تقريبا:', o:['0 – 1 سنة','1 – 3 سنوات','3 – 6 سنوات','6 – 12 سنة'], a:3, w:'الكمون (6–12): هدوء الدوافع الجنسية وتوجه الطاقة نحو التعلم والعلاقات مع الأقران — وهي مرحلة التمدرس الابتدائي.'},
+    {d:'dev', q:'نظرية مراحل النمو الأخلاقي (ما قبل تقليدي، تقليدي، ما بعد تقليدي) صاحبها هو:', o:['بياجي','كولبرغ','إريكسون','مونتسوري'], a:1, w:'لورانس كولبرغ طور مراحل الحكم الأخلاقي انطلاقا من أعمال بياجي.'},
+    {d:'dev', q:'«التمركز حول الذات» (صعوبة أخذ وجهة نظر الآخر) خاصية مميزة لمرحلة:', o:['ما قبل الإجرائية عند بياجي','الإجرائية المجردة عند بياجي','الكمون عند فرويد','الاجتهاد عند إريكسون'], a:0, w:'في ما قبل الإجرائية (2–7) الطفل كيشوف العالم من منظوره فقط — هذا هو التمركز حول الذات.'},
+    {d:'dev', q:'أول مرحلة عند إريكسون (السنة الأولى من العمر) هي:', o:['الاستقلال / الخجل','الثقة / عدم الثقة','المبادرة / الذنب','الهوية / الاضطراب'], a:1, w:'الثقة مقابل عدم الثقة: جودة العناية في السنة الأولى كتبني الإحساس الأساسي بالثقة في العالم.'},
+    {d:'dev', q:'من عوامل النمو عند الطفل:', o:['الوراثة والنضج فقط','البيئة فقط','الوراثة والبيئة والتغذية والتعلم','النضج فقط'], a:2, w:'النمو محصلة تفاعل عوامل داخلية (وراثة، نضج) وخارجية (بيئة، تغذية، صحة، تعلم وخبرة).'},
+
+    // --- علم نفس التعلم ---
+    {d:'learn', q:'التعزيز والعقاب كآلية أساسية للتعلم مرتبطة بنظرية:', o:['الاشتراط الكلاسيكي عند بافلوف','الاشتراط الإجرائي عند سكينر','البنائية عند بياجي','الجشطالت عند كوهلر'], a:1, w:'سكينر: السلوك اللي كيتبعو تعزيز كيتقوى ويتكرر، واللي كيتبعو عقاب كيضعف — هذا هو الاشتراط الإجرائي.'},
+    {d:'learn', q:'تجربة الكلب والجرس وسيلان اللعاب كتمثل:', o:['التعلم بالاستبصار','الاشتراط الكلاسيكي عند بافلوف','التعلم الاجتماعي','التعلم بالمحاولة والخطأ'], a:1, w:'بافلوف: ربط مثير محايد (الجرس) بمثير طبيعي (الطعام) حتى يولد الاستجابة وحده.'},
+    {d:'learn', q:'«المنطقة القريبة من النمو» مفهوم أساسي عند:', o:['بياجي','سكينر','فيغوتسكي','ثورندايك'], a:2, w:'فيغوتسكي: هي المسافة بين ما ينجزه المتعلم وحده وما ينجزه بمساعدة — والتدريس الجيد كيستهدفها بالسقالات.'},
+    {d:'learn', q:'عند بياجي، إدماج خبرة جديدة في بنية معرفية موجودة بلا تعديلها يسمى:', o:['المواءمة','الاستيعاب','التوازن','السقالة'], a:1, w:'الاستيعاب = إدخال الجديد في البنية الموجودة. المواءمة = تعديل البنية نفسها لاستقبال ما لا يناسبها.'},
+    {d:'learn', q:'التعلم بالاستبصار (فهم الحل دفعة واحدة) هو مفهوم مركزي في نظرية:', o:['السلوكية','الجشطالتية','البنائية','المعرفية المعلوماتية'], a:1, w:'الجشطالت (كوهلر وتجربة القرد سلطان): التعلم إدراك للكل وعلاقاته، ماشي تراكم تجارب جزئية.'},
+    {d:'learn', q:'أي دافعية هي الأبقى أثرا في التعلم على المدى الطويل؟', o:['الدافعية الخارجية بالنقط','الدافعية الداخلية بالاهتمام والرغبة','الدافعية بالعقاب','الدافعية بالمقارنة مع الأقران'], a:1, w:'الدافعية الداخلية (الاهتمام، الفضول، الإحساس بالكفاءة) كتعطي تعلما أعمق وأبقى من المكافآت الخارجية.'},
+    {d:'learn', q:'«قانون الأثر» عند ثورندايك كيقول باللي السلوك:', o:['المعزز بنتيجة مرضية يتقوى ويتكرر','كيوقع غير بالملاحظة','كيتبنى غير اجتماعيا','ما كيتأثرش بالنتائج'], a:0, w:'قانون الأثر: الاستجابة المتبوعة برضا تتقوى، والمتبوعة بانزعاج تضعف — وهو أساس نظرية سكينر من بعد.'},
+    {d:'learn', q:'تلميذ كيواجه صعوبة ثابتة في القراءة رغم ذكاء عادي ومواظبة، هادي حالة تحتاج:', o:['عقابا على الإهمال','تشخيصا ودعما فارقيا مناسبا','إعادة السنة تلقائيا','تجاهلها حتى تزول'], a:1, w:'صعوبات التعلم (مثل عسر القراءة) اضطرابات خاصة تحتاج تشخيصا وتدخلا بيداغوجيا فارقيا، ماشي عقابا أو تجاهلا.'},
+
+    // --- المقاربات البيداغوجية ---
+    {d:'ped', q:'الكفاية في المقاربة بالكفايات تعني قدرة المتعلم على:', o:['حفظ أكبر عدد من المعارف','تعبئة موارد متنوعة لمواجهة وضعية مركبة','إنجاز التمارين بسرعة','إعادة الدرس كما قدمه الأستاذ'], a:1, w:'الكفاية = تعبئة وإدماج موارد (معارف، مهارات، مواقف) لمعالجة وضعية مركبة ذات معنى.'},
+    {d:'ped', q:'بيداغوجيا الأهداف كتعتمد بالأساس على:', o:['وضعيات إدماجية مركبة','أهداف إجرائية قابلة للملاحظة والقياس','مشاريع طويلة المدى','التعلم الذاتي الحر'], a:1, w:'عصر بيداغوجيا الأهداف (بلوم): صياغة الهدف بسلوك قابل للملاحظة والقياس، والتعلم مجزأ إلى أهداف صغيرة.'},
+    {d:'ped', q:'التقويم اللي كيدار في بداية الوحدة لتشخيص المكتسبات القبلية هو التقويم:', o:['الإجمالي','التكويني','التشخيصي','الإشهادي'], a:2, w:'التشخيصي = قبل التعلم. التكويني = أثناءه. الإجمالي/الإشهادي = في نهايته.'},
+    {d:'ped', q:'وظيفة التقويم التكويني الأساسية هي:', o:['منح نقطة نهائية','تعديل التعلم أثناء سيره عبر التغذية الراجعة','انتقاء المتفوقين','معاقبة المتعثرين'], a:1, w:'التكويني كيرافق التعلم: كيكشف التعثر فوقتو وكيعطي تغذية راجعة للأستاذ والمتعلم معا للتعديل.'},
+    {d:'ped', q:'المنهج التوليدي «السقراطي» كيعتمد بالأساس على:', o:['التلقين المباشر','الأسئلة المتدرجة اللي كتولد المعرفة عند المتعلم','الحفظ والتسميع','العروض الجاهزة'], a:1, w:'سقراط كان «يولّد» الأفكار عند محاوره بسلسلة أسئلة — المتعلم كيوصل للمعرفة بنفسه بتوجيه.'},
+    {d:'ped', q:'البيداغوجيا الفارقية كتعالج بالأساس:', o:['غياب المتعلمين','الفروق الفردية بين المتعلمين بتنويع الطرائق والإيقاعات','نقص الوسائل التعليمية','ازدحام الأقسام فقط'], a:1, w:'لأن المتعلمين ما كيتعلموش بنفس الطريقة ولا نفس الإيقاع، الفارقية كتنوع المسارات والمهمات والدعم.'},
+    {d:'ped', q:'في المقاربة بالكفايات، تقويم الكفاية كيكون غالبا عبر:', o:['سؤال حفظ مباشر','وضعية إدماجية مركبة قريبة من الواقع','اختبار ذكاء','ملاحظة السلوك فقط'], a:1, w:'الكفاية ما كتقاسش بسؤال معلومات، بل بوضعية إدماجية كتستدعي تعبئة الموارد كلها.'},
+    {d:'ped', q:'الجذاذة البيداغوجية هي:', o:['دفتر نصوص القسم','وثيقة تخطيط الأستاذ للدرس: كفايات ومراحل ووسائل وتقويم','تقرير المفتش','محضر مجلس القسم'], a:1, w:'الجذاذة هي أداة التخطيط القبلي للدرس: شنو غادي يدرس، كيفاش، وبأي وسائل، وكيفاش غادي يقوّم.'},
+
+    // --- سوسيولوجيا التربية ---
+    {d:'soc', q:'التنشئة الاجتماعية هي العملية اللي كيكتسب بها الفرد:', o:['المهارات المهنية فقط','قيم المجتمع ومعاييره ولغته وأدواره','المعارف المدرسية فقط','القدرات الجسدية'], a:1, w:'التنشئة كتحول الفرد البيولوجي إلى عضو في المجتمع، عبر الأسرة والمدرسة والأقران والإعلام.'},
+    {d:'soc', q:'عند دوركايم، التربية هي أساسا:', o:['نقل مهارات السوق','التأثير المنهجي للجيل الراشد على الجيل الناشئ لنقل قيم المجتمع','تحرير الفرد من المجتمع','تدريب على مهن محددة'], a:1, w:'تعريف دوركايم الشهير: التربية فعل تمارسه الأجيال الراشدة على الأجيال غير الناضجة بعد للحياة الاجتماعية.'},
+    {d:'soc', q:'مفهوم «رأس المال الثقافي» و«إعادة الإنتاج الاجتماعي» مرتبطان بـ:', o:['دوركايم','بورديو','مورينو','لوين'], a:1, w:'بورديو: أبناء الطبقات الميسورة كيرثوا رأس مال ثقافيا (لغة، أذواق، علاقات بالمدرسة) كيساعدهم، فالمدرسة قد تعيد إنتاج الفوارق.'},
+    {d:'soc', q:'القياس السوسيومتري، اللي كيكشف علاقات التفضيل والرفض داخل جماعة القسم، طوره:', o:['كورت لوين','مورينو','بورديو','فيغوتسكي'], a:1, w:'مورينو أسس السوسيومتري: كنسولو كل فرد شكون كيختار يجلس/يشتغل معاه، وكنرسمو خريطة العلاقات (النجوم والمعزولين).'},
+    {d:'soc', q:'التربية الدامجة كتعني:', o:['تعليم ذوي الاحتياجات الخاصة في مؤسسات منفصلة دائما','إدماج الأطفال ذوي الاحتياجات الخاصة في الأقسام العادية مع الدعم المناسب','إعفاءهم من التقويم','دمج الأقسام لتقليص العدد'], a:1, w:'الدمج = الحق في التمدرس مع الأقران في القسم العادي، مع تكييف ودعم — ضد الإقصاء والفصل.'},
+    {d:'soc', q:'الهدر المدرسي كيشمل أساسا:', o:['تأخر الأساتذة','الرسوب والانقطاع المبكر عن الدراسة','تلف التجهيزات','غياب الأنشطة'], a:1, w:'الهدر = كل خروج من المنظومة بلا مؤهل: رسوب متكرر وانقطاع نهائي، بأسباب اجتماعية واقتصادية وبيداغوجية.'},
+    {d:'soc', q:'مفهوم «دينامية الجماعة» كميدان لدراسة التفاعلات داخل الجماعات أسسه:', o:['مورينو','كورت لوين','دوركايم','بلوم'], a:1, w:'لوين: سلوك الفرد محصلة تفاعله مع بيئته الاجتماعية؛ الجماعة كلٌّ دينامي يؤثر في أعضائه ويتأثر بهم.'},
+    {d:'soc', q:'نمط القيادة داخل القسم الأنجع تربويا غالبا هو النمط:', o:['السلطوي','المتساهل (ترك الأمور)','الديمقراطي التشاركي','القائم على العقاب'], a:2, w:'القيادة الديمقراطية: قواعد واضحة متفق عليها، مشاركة المتعلمين، وحزم بلا تسلط — أفضل من السلطوية والفوضى معا.'}
+  ];
+
+  var letters = ['أ','ب','ج','د'];
+  var state = { list: QUESTIONS.slice(), idx: 0, score: 0, answered: false };
+
+  var elCount = document.getElementById('qCount');
+  var elBar = document.getElementById('qBar');
+  var elScore = document.getElementById('qScore');
+  var elDomain = document.getElementById('qDomain');
+  var elText = document.getElementById('qText');
+  var elOpts = document.getElementById('qOpts');
+  var elExplain = document.getElementById('qExplain');
+  var elVerdict = document.getElementById('qVerdict');
+  var elWhy = document.getElementById('qWhy');
+  var btnNext = document.getElementById('btnNext');
+  var quizArea = document.getElementById('quizArea');
+  var doneArea = document.getElementById('doneArea');
+
+  function render(){
+    var item = state.list[state.idx];
+    state.answered = false;
+    elCount.textContent = 'السؤال ' + (state.idx + 1) + ' من ' + state.list.length;
+    elBar.style.width = ((state.idx) / state.list.length * 100) + '%';
+    elScore.textContent = 'النتيجة: ' + state.score;
+    elDomain.textContent = DOMAIN_NAMES[item.d];
+    elText.textContent = item.q;
+    elExplain.className = 'explain';
+    btnNext.disabled = true;
+    btnNext.textContent = (state.idx === state.list.length - 1) ? 'شوف النتيجة ←' : 'السؤال التالي ←';
+    elOpts.innerHTML = '';
+    item.o.forEach(function(opt, i){
+      var b = document.createElement('button');
+      b.className = 'opt';
+      b.type = 'button';
+      var l = document.createElement('span'); l.className = 'letter'; l.textContent = letters[i];
+      var t = document.createElement('span'); t.textContent = opt;
+      b.appendChild(l); b.appendChild(t);
+      b.addEventListener('click', function(){ answer(i, b); });
+      elOpts.appendChild(b);
+    });
+  }
+
+  function answer(i, btn){
+    if (state.answered) return;
+    state.answered = true;
+    var item = state.list[state.idx];
+    var buttons = elOpts.querySelectorAll('.opt');
+    buttons.forEach(function(b, j){
+      b.disabled = true;
+      if (j === item.a) b.classList.add('correct');
+    });
+    var ok = (i === item.a);
+    if (ok) { state.score++; }
+    else { btn.classList.add('wrong'); }
+    elScore.textContent = 'النتيجة: ' + state.score;
+    elVerdict.textContent = ok ? 'صحيح! أحسنت' : 'غلط — الجواب الصحيح: ' + letters[item.a];
+    elVerdict.className = 'verdict ' + (ok ? 'ok' : 'ko');
+    elWhy.textContent = item.w;
+    elExplain.classList.add('show');
+    btnNext.disabled = false;
+    elBar.style.width = ((state.idx + 1) / state.list.length * 100) + '%';
+  }
+
+  function finish(){
+    quizArea.hidden = true;
+    doneArea.hidden = false;
+    var total = state.list.length;
+    document.getElementById('doneScore').textContent = state.score + ' / ' + total;
+    var ratio = state.score / total;
+    var msg;
+    if (ratio >= 0.8) msg = 'مستوى ممتاز — راك قريب من جاهزية الامتحان. كمل بالنماذج السابقة بالتوقيت الحقيقي.';
+    else if (ratio >= 0.55) msg = 'مستوى لا بأس به. عاود قرا الملخصات ديال المجالات اللي غلطتي فيها بزاف، وعاود التدريب غدا.';
+    else msg = 'هادي غير البداية: رجع للملخصات، راجع مجال بمجال، وعاود هاد الـ QCM — الغلط دابا خير من الغلط نهار الامتحان.';
+    document.getElementById('doneMsg').textContent = msg;
+  }
+
+  btnNext.addEventListener('click', function(){
+    if (state.idx === state.list.length - 1) finish();
+    else { state.idx++; render(); }
+  });
+
+  function restart(filter){
+    if (filter === 'all') state.list = QUESTIONS.slice();
+    else state.list = QUESTIONS.filter(function(q){ return q.d === filter; });
+    state.idx = 0; state.score = 0;
+    quizArea.hidden = false; doneArea.hidden = true;
+    render();
+  }
+  document.getElementById('btnRestart').addEventListener('click', function(){ restart(currentFilter); });
+  document.getElementById('btnAgain').addEventListener('click', function(){ restart(currentFilter); });
+
+  var currentFilter = 'all';
+  var filterBtns = document.querySelectorAll('#filters button');
+  filterBtns.forEach(function(b){
+    b.addEventListener('click', function(){
+      filterBtns.forEach(function(x){ x.classList.remove('active'); });
+      b.classList.add('active');
+      currentFilter = b.getAttribute('data-f');
+      restart(currentFilter);
+    });
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
