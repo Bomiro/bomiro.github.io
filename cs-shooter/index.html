@@ -105,6 +105,24 @@
       #ammo-label { font-size: 12px; opacity: .8; margin-top: 2px; }
       #reload-hint { font-size: 12px; color: #ffd75e; min-height: 15px; }
 
+      /* reloading indicator (under crosshair) */
+      #reload-ind {
+        position: absolute; left: 50%; top: calc(50% + 34px); transform: translateX(-50%);
+        text-align: center; display: none; width: 170px;
+      }
+      #reload-ind.on { display: block; }
+      #reload-ind-label {
+        font-size: 14px; font-weight: 800; color: #ffd75e;
+        text-shadow: 0 1px 5px rgba(0,0,0,.9); margin-bottom: 5px;
+        animation: reloadPulse .55s ease-in-out infinite alternate;
+      }
+      @keyframes reloadPulse { from { opacity: .55; } to { opacity: 1; } }
+      #reload-bar {
+        height: 6px; background: rgba(0,0,0,.55); border: 1px solid rgba(255,215,94,.5);
+        border-radius: 3px; overflow: hidden;
+      }
+      #reload-fill { height: 100%; width: 0%; background: #ffd75e; }
+
       /* damage vignette */
       #dmg {
         position: absolute; inset: 0; pointer-events: none; opacity: 0;
@@ -203,6 +221,7 @@
       <div id="dmg"></div>
       <div id="heal-flash"></div>
       <div id="cross"><span class="dot"></span></div>
+      <div id="reload-ind"><div id="reload-ind-label">⏳ كيعمّر...</div><div id="reload-bar"><div id="reload-fill"></div></div></div>
       <div id="hitmark"></div>
       <div id="topbar">
         <div id="scoreboard"></div>
@@ -239,7 +258,7 @@
           ❤️ الصحة <b>100</b> — إلا مت كتعاود تولد بعد <b>3 ثواني</b><br>
           🏆 الفائز: الأول يوصل <b>10 قتلات</b><br>
           🎯 قتلة = نقطة · <b>Headshot = نقطتين</b><br>
-          🔫 ذخيرة <b>30</b> طلقة — عمّر بـ <b>R</b> قبل ما تسالي<br>
+          🔫 ذخيرة <b>30</b> طلقة — إلا خوا المخزن <b>كيعمّر بوحدو تلقائياً</b>، و <b>R</b> للتلقيم اليدوي في أي وقت<br>
           💻 PC: <b>WASD</b> + الماوس · 📱 التيليفون: جويستيك + سحب + زر الضرب
         </div>
         <button class="big-btn" id="btn-start" type="button">ابدأ اللعب ▶</button>
@@ -279,6 +298,7 @@
       var WIN_SCORE = 10;           // first to 10 kills wins (headshot points are a bonus tally)
       var RESPAWN_MS = 3000;
       var MAG_SIZE = 30;
+      var RELOAD_MS = 1400;         // reload duration (same for manual R and auto-reload)
 
       // ---------- helpers ----------
       function clamp(v, a, b) { return v < a ? a : (v > b ? b : v); }
@@ -639,6 +659,8 @@
       var hpFill = document.getElementById("hp-fill");
       var ammoNum = document.getElementById("ammo-num");
       var reloadHint = document.getElementById("reload-hint");
+      var reloadInd = document.getElementById("reload-ind");
+      var reloadFill = document.getElementById("reload-fill");
       var myKills = document.getElementById("my-kills");
       var myDeaths = document.getElementById("my-deaths");
       var sbEl = document.getElementById("scoreboard");
@@ -755,6 +777,7 @@
           c.yaw = Math.atan2(sp.x, sp.z); // face arena center
           c.velY = 0;
           c.ammo = MAG_SIZE; c.reloading = false;
+          reloadInd.classList.remove("on");
         } else {
           c.pos.set(sp.x, 0, sp.z);
           c.mesh.visible = true;
@@ -775,6 +798,7 @@
 
       function endGame(winner) {
         state = "over";
+        reloadInd.classList.remove("on");
         document.body.classList.remove("playing");
         if (document.pointerLockElement) document.exitPointerLock();
         var title = document.getElementById("end-title");
@@ -884,7 +908,9 @@
       function startReload() {
         if (player.reloading || player.ammo === MAG_SIZE || !player.alive) return;
         player.reloading = true;
-        player.reloadEnd = performance.now() + 1400;
+        player.reloadEnd = performance.now() + RELOAD_MS;
+        reloadInd.classList.add("on");
+        reloadFill.style.width = "0%";
         SFX.reload();
         refreshHUD();
       }
@@ -1154,11 +1180,17 @@
           dmgEl.style.opacity = now < dmgFlashUntil ? "1" : "0";
 
           if (state === "playing") {
-            // reload completion
-            if (player.reloading && now >= player.reloadEnd) {
-              player.reloading = false;
-              player.ammo = MAG_SIZE;
-              refreshHUD();
+            // auto-reload: an empty magazine starts reloading on its own (no R needed)
+            if (player.alive && !player.reloading && player.ammo === 0) startReload();
+            // reload completion + indicator progress
+            if (player.reloading) {
+              reloadFill.style.width = clamp((1 - (player.reloadEnd - now) / RELOAD_MS) * 100, 0, 100) + "%";
+              if (now >= player.reloadEnd) {
+                player.reloading = false;
+                player.ammo = MAG_SIZE;
+                reloadInd.classList.remove("on");
+                refreshHUD();
+              }
             }
             // firing
             if (firing) playerShoot(now);
@@ -1202,6 +1234,7 @@
                   if (c.isPlayer) {
                     c.pos.set(far.x, 0, far.z);
                     c.hp = 100; c.alive = true; c.ammo = MAG_SIZE; c.reloading = false;
+                    reloadInd.classList.remove("on");
                     hideCenter();
                     document.getElementById("heal-flash").style.opacity = "0.7";
                     setTimeout(function () { document.getElementById("heal-flash").style.opacity = "0"; }, 180);
