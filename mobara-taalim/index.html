@@ -226,6 +226,44 @@
   .res p{margin:0;color:var(--ink-soft);font-size:.9rem}
   .res .go{margin-top:9px;font-weight:700;color:var(--teal);font-size:.92rem}
 
+  /* ---------- Mode toggle, timer, results ---------- */
+  .mode-row{margin-bottom:14px}
+  .mode-toggle{display:flex;flex-wrap:wrap;gap:8px}
+  .mode-toggle button{
+    border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:10px;
+    padding:9px 15px;font-weight:700;font-size:.92rem;min-height:2.6rem;
+  }
+  .mode-toggle button.active{background:var(--teal-deep);border-color:var(--teal-deep);color:#fff}
+  .q-timer{font-weight:800;color:var(--red);font-family:"Cairo",sans-serif;font-size:.95rem;white-space:nowrap}
+  .q-src{
+    font-size:.82rem;font-weight:700;color:var(--teal);background:var(--teal-soft);border-radius:6px;
+    padding:2px 9px;display:none;margin-bottom:8px;margin-inline-start:6px;
+  }
+  .q-src.show{display:inline-block}
+  .opt.picked{border-color:var(--teal);background:var(--teal-soft)}
+  .opt.picked .letter{background:var(--teal);color:#fff}
+  .bd-row{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:12px 0 2px}
+  .bd-chip{background:var(--surface-2);border-radius:8px;padding:5px 12px;font-size:.9rem;font-weight:700}
+  .bd-chip b{color:var(--teal)}
+  .mistakes{text-align:right;margin-top:18px}
+  .mistakes h3{font-size:1.05rem;margin-bottom:6px;text-align:center}
+  .mistakes .allok{text-align:center;color:var(--green-ok);font-weight:700}
+  .mistake{border-top:1px solid var(--line);padding:11px 2px;font-size:.94rem}
+  .mistake .mq{font-weight:700;font-family:"Cairo",sans-serif}
+  .mistake .mw{color:var(--ink-soft)}
+  .mistake .bad{color:var(--red);font-weight:700}
+  .mistake .good{color:var(--green-ok);font-weight:700}
+
+  /* ---------- Latest exams ---------- */
+  .format-box{
+    background:var(--amber-soft);border:1px dashed var(--amber);border-radius:12px;
+    padding:14px 17px;font-size:.96rem;margin-bottom:14px;
+  }
+  .format-box b{color:var(--amber)}
+  .format-box ul{margin:6px 0 0;padding-inline-start:19px}
+  .format-box li{margin:3px 0}
+  .res .kind.new{color:var(--amber);background:var(--amber-soft)}
+
   footer{margin-top:44px;border-top:1px solid var(--line);padding-top:16px;color:var(--ink-soft);font-size:.88rem}
   @media (prefers-reduced-motion: reduce){
     html{scroll-behavior:auto}
@@ -239,7 +277,7 @@
   <!-- ================= HERO ================= -->
   <header class="hero">
     <h1>مباراة التعليم 2026<br />المراجعة و<span class="accent"> QCM </span>فبلاصة وحدة</h1>
-    <p class="lead">كلشي مجموع ومنظم هنا: ملخصات علوم التربية مرتبة حسب وزن كل مجال فالامتحان، خطة مراجعة حتى نهار الامتحان، تدريب QCM بتصحيح فوري وشرح، ونماذج الامتحانات السابقة مع ملفات PDF.</p>
+    <p class="lead">كلشي مجموع ومنظم هنا: ملخصات علوم التربية مرتبة حسب وزن كل مجال فالامتحان، خطة مراجعة حتى نهار الامتحان، تدريب QCM من 60 سؤال — فيهم أسئلة مقتبسة من نماذج رسمية 2023 و2024 — مع وضع محاكاة امتحان بالمؤقّت، وأحدث النماذج الرسمية بالتصحيح وملفات PDF جديدة.</p>
     <div class="meta-row">
       <span class="meta-chip">الامتحان الكتابي <b>السبت 28 نونبر 2026</b></span>
       <span class="meta-chip">النوع <b>QCM</b></span>
@@ -260,6 +298,7 @@
     <a href="#weights">أوزان المجالات</a>
     <a href="#plan">خطة المراجعة</a>
     <a href="#revision">الملخصات</a>
+    <a href="#exams">أحدث النماذج</a>
     <a href="#qcm">تدريب QCM</a>
     <a href="#resources">النماذج و PDF</a>
   </nav>
@@ -342,7 +381,7 @@
         <h3>امتحانات كاملة بالتوقيت الحقيقي</h3>
         <p>بلا دروس جداد. غير محاكاة وظروف الامتحان.</p>
         <ul>
-          <li>دير نموذج 2022 ونموذج 2021 كاملين فساعتين، بلا توقف</li>
+          <li>دير نموذج أكتوبر 2024 (الأحدث) ونموذج أبريل 2024 كاملين فساعتين، بلا توقف وبنفس صيغة الامتحان</li>
           <li>صحح وعاود قرا غير المواضيع اللي غلطتي فيها</li>
           <li>ليلة الامتحان: مراجعة خفيفة للجداول المقارنة ونوم بكري</li>
         </ul>
@@ -468,13 +507,78 @@
     </details>
   </section>
 
+  <!-- ================= LATEST EXAMS ================= -->
+  <section id="exams">
+    <div class="sec-head"><h2>أحدث النماذج الرسمية</h2><span class="tag">2023 – 2024 · الموضوع + التصحيح</span></div>
+    <p class="sec-sub">هادو آخر دورات ديال اختبار علوم التربية (سلك الثانوي) بالموضوع الكامل والتصحيح. الامتحان ديالك غادي يكون بنفس البنية: 60 سؤال من Q61 حتى Q120، ساعتان، معامل 8.</p>
+    <div class="format-box">
+      <b>شنو تبدّل فأحدث دورة (أكتوبر 2024) — رد بالك:</b>
+      <ul>
+        <li>ولّات <b>5 اختيارات</b> لكل سؤال (A حتى E)، والاختيار E ديما هو «جميع الاختيارات المقترحة خاطئة» — ما تستبعدوش تلقائيا، راه ممكن يكون هو الجواب.</li>
+        <li>الامتحان كيبدا بـ<b>نص انطلاق</b> (فأكتوبر 2024: حوار مع فيليب ميريو حول الطرائق التربوية) وعليه حوالي 9 أسئلة فهم قبل أسئلة المعارف.</li>
+        <li><b>بلا تنقيط سالب:</b> الجواب الصحيح +1، والغلط أو الفراغ 0 — يعني جاوب على كلشي وما تخلي حتى سؤال خاوي.</li>
+      </ul>
+    </div>
+    <div class="res-grid">
+      <a class="res" href="https://mesconcours.ma/ar/concours/enseignement/2024-539/" target="_blank" rel="noopener">
+        <span class="kind new">الأحدث · أكتوبر 2024</span>
+        <h3>علوم التربية — دورة أكتوبر 2024</h3>
+        <p>آخر نموذج رسمي: 60 سؤال بصيغة 5 اختيارات، كيبدا بنص انطلاق (حوار ميريو)، مع التصحيح المفصل سؤال بسؤال.</p>
+        <div class="go">افتح الموضوع والتصحيح ←</div>
+      </a>
+      <a class="res" href="https://mesconcours.ma/ar/concours/enseignement/2024-538/" target="_blank" rel="noopener">
+        <span class="kind">أبريل 2024 · تصحيح رسمي</span>
+        <h3>علوم التربية — دورة أبريل 2024</h3>
+        <p>60 سؤال (4 اختيارات) والتصحيح ديالو هو <b>شبكة التصحيح الرسمية</b> الصادرة عن المركز الوطني للتقويم والامتحانات — الأدق للتدريب.</p>
+        <div class="go">افتح الموضوع والتصحيح ←</div>
+      </a>
+      <a class="res" href="https://mesconcours.ma/ar/concours/enseignement/2024/" target="_blank" rel="noopener">
+        <span class="kind">فبراير 2024</span>
+        <h3>علوم التربية — دورة فبراير 2024</h3>
+        <p>الموضوع الكامل (Q61–Q120) مع التصحيح المفصل: نظريات التعلم، الأهداف والكفايات، الحياة المدرسية ودينامية الجماعة.</p>
+        <div class="go">افتح الموضوع والتصحيح ←</div>
+      </a>
+      <a class="res" href="https://wadifaprepa.com/%D8%AA%D8%B5%D8%AD%D9%8A%D8%AD-%D8%A7%D8%AE%D8%AA%D8%A8%D8%A7%D8%B1-%D8%B9%D9%84%D9%88%D9%85-%D8%A7%D9%84%D8%AA%D8%B1%D8%A8%D9%8A%D8%A9-%D8%AF%D9%88%D8%B1%D8%A9-%D9%81%D8%A8%D8%B1%D8%A7%D9%8A%D8%B1/" target="_blank" rel="noopener">
+        <span class="kind">فبراير 2024 · شرح مفصل</span>
+        <h3>تصحيح فبراير 2024 سؤال بسؤال مع التعليل</h3>
+        <p>نفس النموذج ولكن كل جواب معلّل بيداغوجيا — مثالي باش تفهم علاش الجواب صحيح، ماشي غير تعرفو.</p>
+        <div class="go">افتح التصحيح المعلّل ←</div>
+      </a>
+      <a class="res" href="https://www.manasseb.com/sujet/sujet-41916-enseignant-2023/" target="_blank" rel="noopener">
+        <span class="kind pdf">PDF · دورة 2023</span>
+        <h3>علوم التربية — موضوع 2023 (ثانوي)</h3>
+        <p>موضوع 2023 كامل بصيغة PDF (60 سؤال) مع اقتراح تصحيح — نص الانطلاق ديالو كان على تكافؤ الفرص والأصل الاجتماعي.</p>
+        <div class="go">افتح الموضوع ←</div>
+      </a>
+      <a class="res" href="https://mesconcours.ma/ar/concours/enseignement/college-lycee/sciences-education/" target="_blank" rel="noopener">
+        <span class="kind">أرشيف كامل</span>
+        <h3>أرشيف نماذج علوم التربية — 6 نماذج</h3>
+        <p>كل نماذج الاختبار المشترك للثانوي فبلاصة وحدة: نونبر 2022، 2023، ودورات 2024 الثلاث، بالموضوع والتصحيح.</p>
+        <div class="go">افتح الأرشيف ←</div>
+      </a>
+      <a class="res" href="https://wadifaprepa.com/%D9%86%D9%85%D8%A7%D8%B0%D8%AC-%D8%A7%D9%85%D8%AA%D8%AD%D8%A7%D9%86%D8%A7%D8%AA-%D9%85%D8%A8%D8%A7%D8%B1%D8%A7%D8%A9-%D8%A7%D9%84%D8%AA%D8%B9%D9%84%D9%8A%D9%85-%D8%A7%D9%84%D9%83%D8%AA%D8%A7%D8%A8/" target="_blank" rel="noopener">
+        <span class="kind pdf">PDF · كل الأسلاك</span>
+        <h3>أرشيف نماذج مباراة التعليم (PDF)</h3>
+        <p>صفحة متجددة فيها نماذج كل الأسلاك والتخصصات للتحميل PDF، وفيها مواضيع علوم التربية فبراير وأبريل وأكتوبر 2024.</p>
+        <div class="go">افتح صفحة النماذج ←</div>
+      </a>
+    </div>
+    <div class="rule-strip"><b>كيفاش تخدم بنص الانطلاق:</b> قرا الأسئلة قبل ما تقرا النص، حدد الكلمات المفاتيح د كل سؤال، ومن بعد رجع للنص ودور على الجواب فيه. أسئلة الفهم كتاخد وقت — ما تخليهاش تاكل ليك وقت أسئلة المعارف السريعة.</div>
+  </section>
+
   <!-- ================= QCM ================= -->
   <section id="qcm">
-    <div class="sec-head"><h2>تدريب QCM</h2><span class="tag">32 سؤال · تصحيح فوري + شرح</span></div>
-    <p class="sec-sub">اختار مجال ولا دير «الكل» كمحاكاة مختلطة. جاوب، شوف التصحيح والشرح مباشرة، وكمل. النتيجة كتبان فاللخر.</p>
+    <div class="sec-head"><h2>تدريب QCM</h2><span class="tag">60 سؤال · منها مقتبسة من نماذج 2023–2024</span></div>
+    <p class="sec-sub">جوج أوضاع: <b>وضع التدريب</b> بتصحيح فوري وشرح بعد كل سؤال، و<b>وضع الامتحان</b> كمحاكاة حقيقية — أسئلة مخلطة، مؤقّت (دقيقتان لكل سؤال كيما الامتحان)، وبلا تصحيح حتى تسالي. فالنهاية كتشوف النتيجة مقسمة على المجالات ولائحة أخطائك باش تعاود تراجعها.</p>
     <div class="qcm-box">
+      <div class="mode-row">
+        <div class="mode-toggle" role="group" aria-label="وضع التدريب">
+          <button id="modeTrain" class="active" type="button">وضع التدريب — تصحيح فوري</button>
+          <button id="modeExam" type="button">وضع الامتحان — محاكاة بالمؤقّت</button>
+        </div>
+      </div>
       <div class="filters" id="filters" role="group" aria-label="اختيار المجال">
-        <button data-f="all" class="active">الكل (32)</button>
+        <button data-f="all" class="active">الكل (60)</button>
         <button data-f="dev">علم نفس النمو</button>
         <button data-f="learn">علم نفس التعلم</button>
         <button data-f="ped">المقاربات وطرائق التدريس</button>
@@ -482,11 +586,12 @@
       </div>
       <div id="quizArea">
         <div class="q-progress">
-          <span id="qCount">السؤال 1 من 30</span>
+          <span id="qCount">السؤال 1 من 60</span>
           <div class="track"><i id="qBar"></i></div>
           <span class="q-score" id="qScore">النتيجة: 0</span>
+          <span class="q-timer" id="qTimer" hidden></span>
         </div>
-        <span class="q-domain" id="qDomain"></span>
+        <span class="q-domain" id="qDomain"></span><span class="q-src" id="qSrc"></span>
         <p class="q-text" id="qText"></p>
         <div class="opts" id="qOpts"></div>
         <div class="explain" id="qExplain">
@@ -501,7 +606,9 @@
       <div id="doneArea" class="q-done" hidden>
         <div class="big" id="doneScore"></div>
         <p id="doneMsg"></p>
-        <button class="btn primary" id="btnAgain">عاود التدريب</button>
+        <div class="bd-row" id="doneBreakdown"></div>
+        <div class="mistakes" id="doneMistakes"></div>
+        <button class="btn primary" id="btnAgain" style="margin-top:16px">عاود التدريب</button>
       </div>
     </div>
   </section>
@@ -541,6 +648,24 @@
         <p>ملخص شامل في علوم التربية — ملف PDF مباشر للتحميل.</p>
         <div class="go">حمّل الـ PDF ←</div>
       </a>
+      <a class="res" href="https://www.mtaaliiim.com/2026/11/pdf.html" target="_blank" rel="noopener">
+        <span class="kind pdf">PDF · جديد</span>
+        <h3>«أهم ما قيل في علوم التربية» (PDF)</h3>
+        <p>ملف مركز من 7 صفحات: النظريات والبيداغوجيات والديداكتيك وروادها في جداول، مع جدول مراجعة سريعة (الرائد ومفهومه) و6 أسئلة محتملة بعناصر إجابتها.</p>
+        <div class="go">افتح صفحة الـ PDF ←</div>
+      </a>
+      <a class="res" href="https://sigmoid.ma/pluginfile.php/24743/mod_resource/content/0/%D9%85%D8%AE%D8%AA%D8%B5%D8%B1%20%D8%B9%D9%84%D9%88%D9%85%20%D8%A7%D9%84%D8%AA%D8%B1%D8%A8%D9%8A%D8%A9.pdf" target="_blank" rel="noopener">
+        <span class="kind pdf">PDF مباشر</span>
+        <h3>الدليل المختصر في علوم التربية والبيداغوجيا (PDF)</h3>
+        <p>دليل ياسين سلين في 9 محاور: النظام التربوي المغربي، نظريات التعلم، المقاربات، المنهاج، الديداكتيك، التخطيط والتقويم، طرائق التدريس والحياة المدرسية.</p>
+        <div class="go">حمّل الـ PDF ←</div>
+      </a>
+      <a class="res" href="https://www.goodsurban.com/2026/10/pdf.html" target="_blank" rel="noopener">
+        <span class="kind pdf">PDF · خطاطات</span>
+        <h3>ملخص علوم التربية على شكل خطاطات (PDF)</h3>
+        <p>51 صفحة من الخطاطات المنظمة (إعداد عبد الله كثيف): نظريات التعلم ومراحل النمو في مخططات سريعة الاستحضار قبل الامتحان.</p>
+        <div class="go">افتح صفحة الـ PDF ←</div>
+      </a>
       <a class="res" href="https://your-book.com/%d8%b3%d9%8a%d9%83%d9%88%d9%84%d9%88%d8%ac%d9%8a%d8%a7-%d8%a7%d9%84%d9%86%d9%85%d9%88/" target="_blank" rel="noopener">
         <span class="kind">ملخص</span>
         <h3>ملخص سيكولوجيا النمو</h3>
@@ -557,7 +682,7 @@
   </section>
 
   <footer>
-    تجميع للمراجعة من الإطار المرجعي لاختبار علوم التربية (الأوزان الرسمية: علم النفس التربوي 40%، المقاربات البيداغوجية 30%، سوسيولوجيا التربية 30%). أسئلة QCM تدريبية مصاغة على نمط المباراة وليست أسئلة رسمية. بالتوفيق نهار 28 نونبر.
+    تجميع للمراجعة من الإطار المرجعي لاختبار علوم التربية (الأوزان الرسمية: علم النفس التربوي 40%، المقاربات البيداغوجية 30%، سوسيولوجيا التربية 30%). أسئلة QCM تدريبية على نمط المباراة، وبعضها مقتبس من نماذج رسمية منشورة (دورات 2023 و2024) وموسوم بمصدره داخل التدريب. بالتوفيق نهار 28 نونبر.
   </footer>
 </div>
 
@@ -623,11 +748,47 @@
     {d:'soc', q:'التربية الدامجة كتعني:', o:['تعليم ذوي الاحتياجات الخاصة في مؤسسات منفصلة دائما','إدماج الأطفال ذوي الاحتياجات الخاصة في الأقسام العادية مع الدعم المناسب','إعفاءهم من التقويم','دمج الأقسام لتقليص العدد'], a:1, w:'الدمج = الحق في التمدرس مع الأقران في القسم العادي، مع تكييف ودعم — ضد الإقصاء والفصل.'},
     {d:'soc', q:'الهدر المدرسي كيشمل أساسا:', o:['تأخر الأساتذة','الرسوب والانقطاع المبكر عن الدراسة','تلف التجهيزات','غياب الأنشطة'], a:1, w:'الهدر = كل خروج من المنظومة بلا مؤهل: رسوب متكرر وانقطاع نهائي، بأسباب اجتماعية واقتصادية وبيداغوجية.'},
     {d:'soc', q:'مفهوم «دينامية الجماعة» كميدان لدراسة التفاعلات داخل الجماعات أسسه:', o:['مورينو','كورت لوين','دوركايم','بلوم'], a:1, w:'لوين: سلوك الفرد محصلة تفاعله مع بيئته الاجتماعية؛ الجماعة كلٌّ دينامي يؤثر في أعضائه ويتأثر بهم.'},
-    {d:'soc', q:'نمط القيادة داخل القسم الأنجع تربويا غالبا هو النمط:', o:['السلطوي','المتساهل (ترك الأمور)','الديمقراطي التشاركي','القائم على العقاب'], a:2, w:'القيادة الديمقراطية: قواعد واضحة متفق عليها، مشاركة المتعلمين، وحزم بلا تسلط — أفضل من السلطوية والفوضى معا.'}
+    {d:'soc', q:'نمط القيادة داخل القسم الأنجع تربويا غالبا هو النمط:', o:['السلطوي','المتساهل (ترك الأمور)','الديمقراطي التشاركي','القائم على العقاب'], a:2, w:'القيادة الديمقراطية: قواعد واضحة متفق عليها، مشاركة المتعلمين، وحزم بلا تسلط — أفضل من السلطوية والفوضى معا.'},
+
+    // --- أسئلة إضافية: النمو ---
+    {d:'dev', q:'عند برونر، مراحل تمثل المعرفة عند المتعلم تتدرج من الفعلي إلى الأيقوني، وأعلاها هي المرحلة:', o:['الحركية الفعلية','الأيقونية (التصويرية)','الرمزية','الحسية'], a:2, s:'مستوحى من نموذج 2023', w:'برونر: التمثيل الفعلي (بالفعل والحركة) ثم الأيقوني (بالصور) ثم الرمزي (باللغة والرموز) — والرمزي هو الأعلى تجريدا.'},
+    {d:'dev', q:'عند ماسلو، الحاجة التي يجب إشباعها أولا قبل أي تعلم فعال هي:', o:['تحقيق الذات','الحاجات الفيزيولوجية والأمن','التقدير والاحترام','الانتماء'], a:1, w:'هرم ماسلو يبدأ بالفيزيولوجي والأمن: تلميذ جائع أو خائف أو مهدد لا يستطيع التركيز في التعلم.'},
+    {d:'dev', q:'عند فرويد، مكوّن الشخصية الذي يمثل الضمير والقيم الأخلاقية المكتسبة من المجتمع هو:', o:['الهو','الأنا','الأنا الأعلى','الأنا المثالي وحده'], a:2, w:'الأنا الأعلى = الضمير والمثل العليا. الهو = الغرائز واللذة. الأنا = الوسيط الواقعي بينهما.'},
+    {d:'dev', q:'أزمة «الهوية مقابل اضطراب الهوية» عند إريكسون تميز مرحلة:', o:['الطفولة المبكرة','المدرسة الابتدائية','المراهقة','الشيخوخة'], a:2, w:'المراهق يبحث عن جواب «من أنا؟» — نجاحه يبني هوية متماسكة، وفشله يولد اضطراب الأدوار.'},
+    {d:'dev', q:'نظرية «الذكاءات المتعددة» (لغوي، منطقي، موسيقي، اجتماعي...) طورها:', o:['سبيرمان','بينيه','هوارد غاردنر','ثورستون'], a:2, w:'غاردنر رفض فكرة الذكاء الواحد: لكل متعلم ملامح ذكاء مختلفة، وهذا أساس مهم للبيداغوجيا الفارقية.'},
+    {d:'dev', q:'طفل في شهره الثامن يبحث عن لعبة أخفاها عنه أبوه تحت وسادة، فهو اكتسب مفهوم:', o:['الاحتفاظ بالكمية','دوام الموضوع','التفكير الفرضي','التمركز حول الذات'], a:1, w:'دوام الموضوع مكتسب نهاية المرحلة الحسية الحركية: الشيء يبقى موجودا ولو غاب عن البصر.'},
+    {d:'dev', q:'عقدة أوديب عند فرويد تظهر في المرحلة:', o:['الفمية','الشرجية','القضيبية','الكمون'], a:2, w:'القضيبية (3–6 سنوات): تعلق الطفل بالوالد من الجنس الآخر ومنافسة الوالد من نفس الجنس.'},
+
+    // --- أسئلة إضافية: التعلم ---
+    {d:'learn', q:'صعد متعلم إلى السبورة لإنجاز تمرين فارتكب خطأ، فبادر الأستاذ إلى فتح حوار مع جماعة القسم حول القاعدة المتعلقة بالتمرين. بالنسبة لفيغوتسكي، تعتبر مبادرة الأستاذ:', o:['عقابا جماعيا مقنعا','تدخلا أتاح مساعدة التلميذ على اكتساب تعلم بواسطة الجماعة','إضاعة لوقت الدرس','تقويما إجماليا للقسم'], a:1, s:'مقتبس من نموذج أبريل 2024', w:'عند فيغوتسكي التعلم يبنى اجتماعيا: تفاعل المتعلم مع الجماعة والأستاذ داخل المنطقة القريبة من النمو هو ما يحرك التعلم.'},
+    {d:'learn', q:'المبدأ الأساسي في النظرية الجشطالتية هو أن:', o:['التعلم تراكم بسيط للعناصر','الكل أكبر من مجموع أجزائه','التعلم لا يكون إلا بالتعزيز','الكل يساوي مجموع أجزائه تماما'], a:1, s:'مقتبس من نموذج 2023', w:'الجشطالت: إدراك البنية الكلية والعلاقات بين عناصرها هو أساس الفهم والتعلم بالاستبصار.'},
+    {d:'learn', q:'«التعلم ذو المعنى» و«المنظمات المتقدمة» مفهومان أساسيان عند:', o:['أوزوبل','سكينر','واطسون','كوهلر'], a:0, w:'أوزوبل: التعلم يكون ذا معنى إذا ربط المتعلم المعرفة الجديدة بما يعرفه سابقا، والمنظم المتقدم جسر لذلك.'},
+    {d:'learn', q:'«الصراع السوسيومعرفي» كمحرك للتعلم يرتبط أساسا بـ:', o:['السلوكية','السوسيوبنائية (دواز وموني)','التحليل النفسي','الجشطالتية'], a:1, w:'اختلاف وجهات النظر بين الأقران يخلق صراعا معرفيا يدفع كل متعلم لمراجعة تمثلاته وبناء معرفة أرقى.'},
+    {d:'learn', q:'التعلم بالملاحظة والتقليد انطلاقا من نموذج (قدوة) هو صلب نظرية:', o:['بافلوف','بياجي','باندورا — التعلم الاجتماعي','بلوم'], a:2, w:'باندورا: كثير من السلوكات تكتسب بملاحظة النماذج وتقليدها، بلا تعزيز مباشر بالضرورة.'},
+    {d:'learn', q:'مؤسس المدرسة السلوكية في علم النفس هو:', o:['فرويد','واطسون','فيغوتسكي','ماسلو'], a:1, w:'جون واطسون (1913) أسس السلوكية: علم النفس يدرس السلوك القابل للملاحظة (مثير/استجابة) لا العمليات الذهنية.'},
+    {d:'learn', q:'صعوبة تعلم خاصة بالقراءة (فك الرموز والتعرف على الكلمات) رغم ذكاء عادي تسمى:', o:['عسر الكتابة','عسر الحساب','عسر القراءة (الديسليكسيا)','عسر الكلام'], a:2, w:'الديسليكسيا = عسر القراءة. الديسغرافيا = عسر الكتابة. الديسكالكوليا = عسر الحساب.'},
+
+    // --- أسئلة إضافية: البيداغوجيا ---
+    {d:'ped', q:'يتم بناء درس انطلاقا من بيداغوجيا حل المشكلات عبر المقاطع التالية:', o:['تحديد المشكلة – صياغة الفرضيات – اختبار الفرضيات – استخلاص النتائج','العرض – الأمثلة – التمارين – الواجب المنزلي','المشكلة – الوسائل – الحفظ – الاستظهار','التمهيد – القاعدة – التطبيق – التقويم'], a:0, s:'مقتبس من نموذج فبراير 2024', w:'هذا هو منطق المنهج العلمي التجريبي: مشكلة، فرضيات، تحقق تجريبي، ثم نتائج واستنتاجات.'},
+    {d:'ped', q:'عند دوركايم، البيداغوجيا هي:', o:['علم تجريبي مستقل تماما','نظرية عملية تقع بين العلم والممارسة','فن يعتمد على الموهبة فقط','تقنية لصناعة الوسائل التعليمية'], a:1, s:'مقتبس من نموذج 2023', w:'دوركايم: البيداغوجيا ليست علما خالصا ولا فنا خالصا، بل نظرية عملية تستعين بالعلوم لتوجيه الممارسة التربوية.'},
+    {d:'ped', q:'تصنيف بلوم للأهداف التربوية يشمل ثلاثة مجالات: المعرفي والوجداني و:', o:['الاجتماعي','الحس-حركي (النفسحركي)','الثقافي','اللغوي'], a:2, w:'المجالات الثلاثة: معرفي (بلوم)، وجداني (كراثول)، حس-حركي (سمبسون) — والامتحان يحب هذا السؤال.'},
+    {d:'ped', q:'في «بيداغوجيا الخطأ»، خطأ المتعلم يعامل على أنه:', o:['ذنب يستحق العقاب','مؤشر تشخيصي ونقطة انطلاق لبناء التعلم','دليل قاطع على فشل المتعلم','شيء يجب إخفاؤه عن باقي القسم'], a:1, w:'الخطأ معلومة ثمينة للأستاذ: يكشف تمثلات المتعلم الخاطئة، ومعالجتها هي التعلم الحقيقي.'},
+    {d:'ped', q:'وظيفة «وضعية الانطلاق» في درس مبني بالمقاربة بالكفايات هي:', o:['تقويم التعلمات في نهاية الدرس','إثارة دافعية المتعلمين وربطهم بوضعية ذات معنى ينطلق منها التعلم','تلخيص الدرس شفويا','منح نقط المشاركة'], a:1, w:'وضعية الانطلاق مشكلة أو سياق قريب من حياة المتعلم، تخلق الحاجة إلى المعرفة الجديدة.'},
+    {d:'ped', q:'التعلم التعاوني يقوم أساسا على:', o:['منافسة فردية بين المتعلمين','مجموعات صغيرة بهدف مشترك ومسؤولية فردية وجماعية','عمل فردي صامت داخل القسم','نسخ الإجابات من المتعلم الأقوى'], a:1, w:'التعاوني ليس مجرد جلوس في مجموعات: تبادل، اعتماد متبادل إيجابي، وكل فرد مسؤول عن تعلمه وتعلم مجموعته.'},
+    {d:'ped', q:'الدعم البيداغوجي ينظم انطلاقا من:', o:['نتائج التقويم لتشخيص التعثرات ومعالجتها','عقوبات تأديبية','طلبات أولياء الأمور فقط','عدد المتعلمين في القسم فقط'], a:0, w:'لا دعم بلا تشخيص: نحدد من تعثر وفي ماذا بالضبط عبر التقويم، ثم نبني أنشطة معالجة ملائمة.'},
+    {d:'ped', q:'البرمجة السنوية للتعلمات تعني عمليا:', o:['توزيع الوحدات والدروس على أسابيع السنة الدراسية وفق الغلاف الزمني','كتابة محاضر مجالس الأقسام','اختيار الكتب المدرسية','تنظيم الرحلات المدرسية'], a:0, w:'التخطيط يبدأ سنويا (برمجة)، ثم مرحليا (وحدات)، ثم يوميا (الجذاذة) — تسلسل يحبه الامتحان.'},
+
+    // --- أسئلة إضافية: سوسيولوجيا ودينامية الجماعة ---
+    {d:'soc', q:'المجلس الأعلى للتربية والتكوين والبحث العلمي هو:', o:['جمعية مهنية للأساتذة','هيئة دستورية منصوص عليها في دستور 2011','مصلحة خارجية للأكاديمية','مجلس داخلي للمؤسسة'], a:1, s:'مقتبس من نموذج 2023', w:'الفصل 168 من دستور 2011 ينص على المجلس الأعلى للتربية والتكوين والبحث العلمي كمؤسسة دستورية استشارية.'},
+    {d:'soc', q:'تكافؤ الفرص في التعليم يعني تحقيق:', o:['نفس النقط لجميع المتعلمين','مساواة فرص الولوج والنجاح مهما كان الأصل الاجتماعي، مع دعم الفئات الهشة','إلغاء الامتحانات الإشهادية','فصل المتعلمين حسب مستواهم الاجتماعي'], a:1, w:'تكافؤ الفرص ليس مساواة آلية في النتائج، بل إزالة العوائق الاجتماعية والاقتصادية التي تحرم البعض من فرص عادلة.'},
+    {d:'soc', q:'من مهام مجلس تدبير المؤسسة التعليمية:', o:['وضع المناهج الوطنية','تتبع تنفيذ مشروع المؤسسة وتدبير شؤونها التربوية والإدارية بمشاركة الشركاء','منح شهادة البكالوريا','تقويم الأساتذة ومنحهم النقط السنوية'], a:1, w:'مجلس التدبير هيئة تشاركية داخل المؤسسة: يصادق على مشروع المؤسسة ويتتبع تدبيرها، ولا يضع المناهج الوطنية.'},
+    {d:'soc', q:'التنشئة الاجتماعية الأولية، التي تبني شخصية الطفل الأولى، تحدث أساسا داخل:', o:['المدرسة','الأسرة','وسائل الإعلام','جماعة الأقران'], a:1, w:'الأسرة هي مؤسسة التنشئة الأولى (لغة، قيم، أدوار). المدرسة والأقران والإعلام تنشئة ثانوية تكملها أو تنافسها.'},
+    {d:'soc', q:'التواصل البيداغوجي الفعال داخل القسم يقوم على:', o:['كلام الأستاذ وحده من الأول إلى الأخير','الإصغاء والتغذية الراجعة والتفاعل المتبادل بين الأستاذ والمتعلمين','الأوامر القصيرة دون أي نقاش','الصمت التام طوال الحصة'], a:1, w:'التواصل فعل ذو اتجاهين: رسالة، استقبال، وتغذية راجعة — احتكار الأستاذ للكلام يقتل التفاعل والتعلم.'},
+    {d:'soc', q:'في النظرية الوظيفية (دوركايم ومن بعده)، من وظائف المدرسة الأساسية:', o:['إعادة إنتاج الفوارق الطبقية فقط','الإدماج الاجتماعي ونقل القيم المشتركة وتوزيع الأدوار','تحقيق الربح المادي للمؤسسة','الترفيه عن الأطفال'], a:1, w:'الوظيفية ترى المدرسة مؤسسة اندماج: تنقل قيم المجتمع وتهيئ الأفراد لأدوارهم. نقد إعادة الإنتاج جاء من بورديو.'}
   ];
 
   var letters = ['أ','ب','ج','د'];
-  var state = { list: QUESTIONS.slice(), idx: 0, score: 0, answered: false };
+  var state = { list: QUESTIONS.slice(), idx: 0, score: 0, answered: false, mode: 'train', picks: [], results: [], mistakes: [], timerId: null, timeLeft: 0 };
 
   var elCount = document.getElementById('qCount');
   var elBar = document.getElementById('qBar');
@@ -641,14 +802,45 @@
   var btnNext = document.getElementById('btnNext');
   var quizArea = document.getElementById('quizArea');
   var doneArea = document.getElementById('doneArea');
+  var elSrc = document.getElementById('qSrc');
+  var elTimer = document.getElementById('qTimer');
+  var doneBreakdown = document.getElementById('doneBreakdown');
+  var doneMistakes = document.getElementById('doneMistakes');
+
+  function fmtTime(s){
+    var m = Math.floor(s / 60), r = s % 60;
+    return (m < 10 ? '0' : '') + m + ':' + (r < 10 ? '0' : '') + r;
+  }
+  function stopTimer(){
+    if (state.timerId){ clearInterval(state.timerId); state.timerId = null; }
+  }
+  function startTimer(){
+    stopTimer();
+    if (state.mode !== 'exam'){ elTimer.hidden = true; return; }
+    state.timeLeft = state.list.length * 120; /* دقيقتان لكل سؤال، كالامتحان الحقيقي */
+    elTimer.hidden = false;
+    elTimer.textContent = 'الوقت المتبقي: ' + fmtTime(state.timeLeft);
+    state.timerId = setInterval(function(){
+      state.timeLeft--;
+      if (state.timeLeft <= 0){
+        state.timeLeft = 0;
+        elTimer.textContent = 'الوقت المتبقي: 00:00';
+        finish();
+        return;
+      }
+      elTimer.textContent = 'الوقت المتبقي: ' + fmtTime(state.timeLeft);
+    }, 1000);
+  }
 
   function render(){
     var item = state.list[state.idx];
     state.answered = false;
     elCount.textContent = 'السؤال ' + (state.idx + 1) + ' من ' + state.list.length;
     elBar.style.width = ((state.idx) / state.list.length * 100) + '%';
-    elScore.textContent = 'النتيجة: ' + state.score;
+    elScore.textContent = state.mode === 'exam' ? 'وضع الامتحان — التصحيح في النهاية' : 'النتيجة: ' + state.score;
     elDomain.textContent = DOMAIN_NAMES[item.d];
+    if (item.s){ elSrc.textContent = item.s; elSrc.className = 'q-src show'; }
+    else { elSrc.textContent = ''; elSrc.className = 'q-src'; }
     elText.textContent = item.q;
     elExplain.className = 'explain';
     btnNext.disabled = true;
@@ -661,9 +853,22 @@
       var l = document.createElement('span'); l.className = 'letter'; l.textContent = letters[i];
       var t = document.createElement('span'); t.textContent = opt;
       b.appendChild(l); b.appendChild(t);
-      b.addEventListener('click', function(){ answer(i, b); });
+      if (state.mode === 'exam'){
+        if (state.picks[state.idx] === i) b.classList.add('picked');
+        b.addEventListener('click', function(){ pick(i); });
+      } else {
+        b.addEventListener('click', function(){ answer(i, b); });
+      }
       elOpts.appendChild(b);
     });
+    if (state.mode === 'exam' && state.picks[state.idx] != null) btnNext.disabled = false;
+  }
+
+  function pick(i){
+    state.picks[state.idx] = i;
+    var buttons = elOpts.querySelectorAll('.opt');
+    buttons.forEach(function(b, j){ b.classList.toggle('picked', j === i); });
+    btnNext.disabled = false;
   }
 
   function answer(i, btn){
@@ -676,8 +881,9 @@
       if (j === item.a) b.classList.add('correct');
     });
     var ok = (i === item.a);
+    state.results[state.idx] = ok;
     if (ok) { state.score++; }
-    else { btn.classList.add('wrong'); }
+    else { btn.classList.add('wrong'); state.mistakes.push({ item: item, picked: i }); }
     elScore.textContent = 'النتيجة: ' + state.score;
     elVerdict.textContent = ok ? 'صحيح! أحسنت' : 'غلط — الجواب الصحيح: ' + letters[item.a];
     elVerdict.className = 'verdict ' + (ok ? 'ok' : 'ko');
@@ -688,6 +894,18 @@
   }
 
   function finish(){
+    stopTimer();
+    elTimer.hidden = true;
+    if (state.mode === 'exam'){
+      state.score = 0;
+      state.mistakes = [];
+      state.list.forEach(function(item, k){
+        var ok = state.picks[k] === item.a;
+        state.results[k] = ok;
+        if (ok) state.score++;
+        else state.mistakes.push({ item: item, picked: (state.picks[k] == null ? -1 : state.picks[k]) });
+      });
+    }
     quizArea.hidden = true;
     doneArea.hidden = false;
     var total = state.list.length;
@@ -698,6 +916,63 @@
     else if (ratio >= 0.55) msg = 'مستوى لا بأس به. عاود قرا الملخصات ديال المجالات اللي غلطتي فيها بزاف، وعاود التدريب غدا.';
     else msg = 'هادي غير البداية: رجع للملخصات، راجع مجال بمجال، وعاود هاد الـ QCM — الغلط دابا خير من الغلط نهار الامتحان.';
     document.getElementById('doneMsg').textContent = msg;
+
+    /* النتيجة مقسمة على المجالات */
+    var order = ['dev', 'learn', 'ped', 'soc'];
+    var bd = {};
+    state.list.forEach(function(item, k){
+      if (!bd[item.d]) bd[item.d] = { ok: 0, tot: 0 };
+      bd[item.d].tot++;
+      if (state.results[k]) bd[item.d].ok++;
+    });
+    doneBreakdown.innerHTML = '';
+    order.forEach(function(d){
+      if (!bd[d]) return;
+      var chip = document.createElement('span');
+      chip.className = 'bd-chip';
+      var label = document.createTextNode(DOMAIN_NAMES[d] + ': ');
+      var val = document.createElement('b');
+      val.textContent = bd[d].ok + '/' + bd[d].tot;
+      chip.appendChild(label); chip.appendChild(val);
+      doneBreakdown.appendChild(chip);
+    });
+
+    /* لائحة الأخطاء للمراجعة */
+    doneMistakes.innerHTML = '';
+    if (state.mistakes.length){
+      var h = document.createElement('h3');
+      h.textContent = 'أخطاؤك — عاود راجعهم مزيان (' + state.mistakes.length + ')';
+      doneMistakes.appendChild(h);
+      state.mistakes.forEach(function(m){
+        var div = document.createElement('div');
+        div.className = 'mistake';
+        var q = document.createElement('div');
+        q.className = 'mq';
+        q.textContent = m.item.q;
+        var yours = document.createElement('div');
+        var yLabel = document.createTextNode('جوابك: ');
+        var yVal = document.createElement('span');
+        yVal.className = 'bad';
+        yVal.textContent = m.picked >= 0 ? (letters[m.picked] + ' — ' + m.item.o[m.picked]) : 'بلا جواب';
+        yours.appendChild(yLabel); yours.appendChild(yVal);
+        var corr = document.createElement('div');
+        var cLabel = document.createTextNode('الصحيح: ');
+        var cVal = document.createElement('span');
+        cVal.className = 'good';
+        cVal.textContent = letters[m.item.a] + ' — ' + m.item.o[m.item.a];
+        corr.appendChild(cLabel); corr.appendChild(cVal);
+        var why = document.createElement('div');
+        why.className = 'mw';
+        why.textContent = m.item.w;
+        div.appendChild(q); div.appendChild(yours); div.appendChild(corr); div.appendChild(why);
+        doneMistakes.appendChild(div);
+      });
+    } else {
+      var p = document.createElement('p');
+      p.className = 'allok';
+      p.textContent = 'حتى غلطة وحدة ما كاينة — خدمة نقية، هاكا بغينا نهار الامتحان!';
+      doneMistakes.appendChild(p);
+    }
   }
 
   btnNext.addEventListener('click', function(){
@@ -706,11 +981,19 @@
   });
 
   function restart(filter){
+    stopTimer();
     if (filter === 'all') state.list = QUESTIONS.slice();
     else state.list = QUESTIONS.filter(function(q){ return q.d === filter; });
-    state.idx = 0; state.score = 0;
+    if (state.mode === 'exam'){
+      for (var i = state.list.length - 1; i > 0; i--){
+        var j = Math.floor(Math.random() * (i + 1));
+        var tmp = state.list[i]; state.list[i] = state.list[j]; state.list[j] = tmp;
+      }
+    }
+    state.idx = 0; state.score = 0; state.picks = []; state.results = []; state.mistakes = [];
     quizArea.hidden = false; doneArea.hidden = true;
     render();
+    startTimer();
   }
   document.getElementById('btnRestart').addEventListener('click', function(){ restart(currentFilter); });
   document.getElementById('btnAgain').addEventListener('click', function(){ restart(currentFilter); });
@@ -725,6 +1008,18 @@
       restart(currentFilter);
     });
   });
+
+  var modeTrainBtn = document.getElementById('modeTrain');
+  var modeExamBtn = document.getElementById('modeExam');
+  function setMode(m){
+    if (state.mode === m) return;
+    state.mode = m;
+    modeTrainBtn.classList.toggle('active', m === 'train');
+    modeExamBtn.classList.toggle('active', m === 'exam');
+    restart(currentFilter);
+  }
+  modeTrainBtn.addEventListener('click', function(){ setMode('train'); });
+  modeExamBtn.addEventListener('click', function(){ setMode('exam'); });
 
   render();
 })();
